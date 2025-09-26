@@ -16,7 +16,7 @@
 
 ---
 
-## 渠道
+## 链接
 - 🌐 [realfake.top](http://realfake.top) —— 网站入口  
 - 🤗 [huggingface.co/realfaketop](https://huggingface.co/realfaketop) —— 数据下载  
 - 🐙 [github.com/realfaketop](https://github.com/realfaketop) —— 网站与代码  
