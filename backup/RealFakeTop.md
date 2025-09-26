@@ -1,4 +1,4 @@
-# RealFakeTop 介绍
+## 介绍
 
 欢迎来到 **RealFakeTop**。  
 这是一个独立的网站，专注于 **收集、整理与发布“真实与虚假”相关的数据集与资料**。  
@@ -6,7 +6,7 @@
 
 ---
 
-## 网站定位
+## 定位
 
 **RealFakeTop 是一个网站，而不是平台或社区。**  
 它的核心目标是：  
@@ -30,7 +30,7 @@
 
 ---
 
-## 网站的主要内容
+## 内容
 
 1. **数据集整理**  
    - 汇总公开可得的“真伪对照”数据集。  
@@ -85,7 +85,7 @@ RealFakeTop 的信息与数据通过以下渠道同步：
 
 ---
 
-## 网站理念
+## 理念
 
 1. **网站即索引**  
    RealFakeTop 是一个集中展示的站点，所有数据与更新都指向外部可下载的存储点（Hugging Face、GitHub 等）。  
@@ -101,7 +101,7 @@ RealFakeTop 的信息与数据通过以下渠道同步：
 
 ---
 
-## 展望与未来
+## 发展
 
 RealFakeTop 网站将持续发展：  
 
@@ -119,7 +119,7 @@ RealFakeTop 网站将持续发展：
 
 请通过以下地址访问：  
 - [realfake.top](http://realfake.top)  
-- [https://github.com/realfaketop](https://github.com/realfaketop)
+- [github.com/realfaketop](https://github.com/realfaketop)
 - [huggingface.co/realfaketop](https://huggingface.co/realfaketop)  
 - [x.com/realfake_top](https://x.com/realfake_top)  
 
