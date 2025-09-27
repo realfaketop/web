@@ -12,15 +12,13 @@
 ## 内容
 1. **数据集整理** —— 按模态分类的真伪对照集  
 2. **自建扩充** —— 实验生成的虚假样本与真实配对  
-3. **同步更新** —— 网站展示 / Hugging Face 数据 / GitHub 代码 / X 动态  
-
+3. **同步更新** —— 网站展示 / Hugging Face 数据 / GitHub 代码
 ---
 
 ## 链接
 - 🌐 [realfake.top](http://realfake.top) —— 网站入口  
 - 🤗 [huggingface.co/realfaketop](https://huggingface.co/realfaketop) —— 数据下载  
 - 🐙 [github.com/realfaketop](https://github.com/realfaketop) —— 网站与代码  
-- ✖ [x.com/realfake_top](https://x.com/realfake_top) —— 动态公告  
 
 ---
 
