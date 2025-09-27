@@ -72,6 +72,29 @@
             background-color: #ff1a1a; /* Darker red on hover */
         }
 
+        /* 新增：置顶按钮与小标样式（保持整体风格） */
+        .pin-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 6px;
+        }
+        .pin-btn[data-pinned="true"] {
+            background-color: #888;
+        }
+        .pin-flag {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 1px 6px;
+            font-size: 12px;
+            border-radius: 10px;
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+
         /* Hide Hyperlink and Action columns on mobile */
         @media screen and (max-width: 767px) {
             #myTable th:nth-child(4), /* Hyperlink column */
@@ -123,60 +146,63 @@ td {
             sortTable(4);
         }
 
+        // ★ 修改：排序跳过置顶行，并加防卡死保护
         function sortTable(n) {
-            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-            table = document.getElementById("myTable");
-            switching = true;
-            dir = "asc";
-            while (switching) {
-                switching = false;
-                rows = table.getElementsByTagName("TR");
-                for (i = 1; i < (rows.length - 1); i++) {
-                    shouldSwitch = false;
-                    x = rows[i].getElementsByTagName("TD")[n];
-                    y = rows[i + 1].getElementsByTagName("TD")[n];
+            var table = document.getElementById("myTable");
+            var dir = "asc";
+            var pass = 0;
+            var maxPasses = 6; // 保险阈值
+            while (true) {
+                pass++;
+                var switching = false;
+                var comparedAny = false;
+
+                var rows = table.getElementsByTagName("TR");
+                for (var i = 1; i < (rows.length - 1); i++) {
+                    // 跳过涉及置顶行的比较
+                    if (rows[i].getAttribute("data-pinned") === "true" || rows[i + 1].getAttribute("data-pinned") === "true") {
+                        continue;
+                    }
+                    var x = rows[i].getElementsByTagName("TD")[n];
+                    var y = rows[i + 1].getElementsByTagName("TD")[n];
+                    if (!x || !y) continue;
+
+                    comparedAny = true;
+
                     var xContent = x.innerText || x.textContent;
                     var yContent = y.innerText || y.textContent;
 
                     var xNum = parseFloat(xContent.replace(/[^0-9.]/g, ''));
                     var yNum = parseFloat(yContent.replace(/[^0-9.]/g, ''));
 
+                    var shouldSwitch = false;
                     if (dir == "asc") {
                         if (!isNaN(xNum) && !isNaN(yNum)) {
-                            if (xNum > yNum) {
-                                shouldSwitch = true;
-                                break;
-                            }
+                            if (xNum > yNum) { shouldSwitch = true; }
                         } else {
-                            if (xContent.toLowerCase() > yContent.toLowerCase()) {
-                                shouldSwitch = true;
-                                break;
-                            }
+                            if (xContent.toLowerCase() > yContent.toLowerCase()) { shouldSwitch = true; }
                         }
-                    } else if (dir == "desc") {
+                    } else {
                         if (!isNaN(xNum) && !isNaN(yNum)) {
-                            if (xNum < yNum) {
-                                shouldSwitch = true;
-                                break;
-                            }
+                            if (xNum < yNum) { shouldSwitch = true; }
                         } else {
-                            if (xContent.toLowerCase() < yContent.toLowerCase()) {
-                                shouldSwitch = true;
-                                break;
-                            }
+                            if (xContent.toLowerCase() < yContent.toLowerCase()) { shouldSwitch = true; }
                         }
                     }
-                }
-                if (shouldSwitch) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    switching = true;
-                    switchcount++;
-                } else {
-                    if (switchcount == 0 && dir == "asc") {
-                        dir = "desc";
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                         switching = true;
+                        break; // 交换后从头来
                     }
                 }
+
+                if (!switching) {
+                    if (!comparedAny) break;         // 本轮无法比较，直接退出
+                    if (dir === "asc") dir = "desc"; // 做过比较但没交换，切一次方向
+                    else break;                       // 双向都试过了
+                }
+
+                if (pass >= maxPasses) break;        // 保险退出
             }
         }
 
@@ -218,130 +244,93 @@ td {
             filterTable();
         }
 
-// Add a new row to the table
-function addRow() {
-    var table = document.getElementById("myTable");
-    var row = table.insertRow(-1); // Insert at the end of the table
-
-    var name = prompt("Enter Name:");
-    var year = prompt("Enter Year:");
-    var dataType = prompt("Enter Data Type:");
-    var capacity = prompt("Enter Domain (x.com):");
-    var hyperlink = prompt("Enter Hyperlink (https://x.com):");
-
-    // Ask if the user wants to add a hyperlink for the name
-    var addLink = confirm("Do you want to add a hyperlink for the name?");
-    var nameCell = addLink && hyperlink ? `<a target="_blank" href="${hyperlink}">${name}</a>` : name;
-
-    // For Hyperlink column: if there's a hyperlink, make the text a clickable link
-    var displayText = capacity || 'N/A'; // Default to 'N/A' if nothing is entered
-
-    // If hyperlink is provided, wrap the text in an <a> tag to make it clickable
-    var displayContent = hyperlink ? `<a target="_blank" href="${hyperlink}">${displayText}</a>` : displayText;
-
-    row.innerHTML = `
-        <td>${nameCell}</td>
-        <td>${year}</td>
-        <td>${dataType}</td>
-        <td contenteditable="true" onblur="updateLink(this.parentNode, 3)">
-            ${displayContent}
-        </td>
-        <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
-    `;
-
-    // Save the current table data to localStorage
-    saveTableToLocalStorage();
-}
-
-// Update the hyperlink in the table when the user edits the cell
-function updateLink(row, cellIndex) {
-    var cell = row.cells[cellIndex];
-    var url = cell.innerText.trim();
-
-    // Check if the content is a valid URL
-    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-        cell.innerHTML = `<a target="_blank" href="${url}">${url}</a>`;
-    } else {
-        // If the text is not a valid URL, leave it as plain text or 'N/A'
-        cell.innerHTML = url || 'N/A';
-    }
-
-    // After updating the link, save the table to localStorage again
-    saveTableToLocalStorage();
-}
-
-// Delete a row
-function deleteRow(btn) {
-    var row = btn.parentNode.parentNode;
-    row.parentNode.removeChild(row);
-
-    // After deleting the row, save the updated table to localStorage
-    saveTableToLocalStorage();
-}
-
-// Save the current table data to localStorage
-function saveTableToLocalStorage() {
-    var table = document.getElementById("myTable");
-    var rows = table.getElementsByTagName("tr");
-    var tableData = [];
-
-    for (var i = 1; i < rows.length; i++) { // Skip the header row
-        var row = rows[i];
-        var rowData = [];
-
-        for (var j = 0; j < row.cells.length - 1; j++) { // Skip the last cell (Action)
-            var cell = row.cells[j];
-            rowData.push(cell.innerHTML);
+        // ★ 新增：置顶相关函数（最小入侵）
+        function moveRowToTop(row) {
+            var table = document.getElementById("myTable");
+            // 找到置顶块的末尾（连续 data-pinned="true" 的行）
+            var insertIndex = 1;
+            var rows = table.rows;
+            for (var i = 1; i < rows.length; i++) {
+                if (rows[i].getAttribute("data-pinned") === "true") insertIndex = i + 1;
+                else break;
+            }
+            table.tBodies[0].insertBefore(row, table.rows[insertIndex] || null);
+        }
+        function updatePinVisual(row, pinned) {
+            if (pinned) {
+                row.setAttribute("data-pinned","true");
+                // Name 列加一个小标 top
+                var nameCell = row.cells[0];
+                if (!nameCell.querySelector('.pin-flag')) {
+                    var flag = document.createElement('span');
+                    flag.className = 'pin-flag';
+                    flag.textContent = 'top';
+                    nameCell.appendChild(flag);
+                }
+                // 按钮显示 untop
+                var btn = row.querySelector('.pin-btn');
+                if (btn) { btn.setAttribute('data-pinned','true'); btn.textContent = 'untop'; }
+            } else {
+                row.setAttribute("data-pinned","false");
+                var flag = row.querySelector('.pin-flag');
+                if (flag) flag.remove();
+                var btn = row.querySelector('.pin-btn');
+                if (btn) { btn.setAttribute('data-pinned','false'); btn.textContent = 'top'; }
+            }
+        }
+        function pinRow(btn) {
+            var row = btn.parentNode.parentNode;
+            var isPinned = row.getAttribute("data-pinned") === "true";
+            if (isPinned) {
+                // 取消置顶：仅去标记与小标，不强制恢复原位（保持最小改动）
+                updatePinVisual(row, false);
+            } else {
+                // 置顶：打标并移到置顶区
+                updatePinVisual(row, true);
+                moveRowToTop(row);
+            }
         }
 
-        tableData.push(rowData);
-    }
+        // Add a new row to the table
+        function addRow() {
+            var table = document.getElementById("myTable");
+            var row = table.insertRow(-1); // Insert at the end of the table
 
-    // Save table data to localStorage
-    localStorage.setItem('tableData', JSON.stringify(tableData));
-}
+            var name = prompt("Enter Name:");
+            var year = prompt("Enter Year:");
+            var dataType = prompt("Enter Data Type:");
+            var capacity = prompt("Enter Domain (x.com):");
+            var hyperlink = prompt("Enter Hyperlink (https://x.com):");
 
-// Load the table data from localStorage
-function loadTableFromLocalStorage() {
-    var tableData = localStorage.getItem('tableData');
-    if (tableData) {
-        tableData = JSON.parse(tableData);
-        var table = document.getElementById("myTable");
+            // Ask if the user wants to add a hyperlink for the name
+            var addLink = confirm("Do you want to add a hyperlink for the name?");
+            var nameCell = addLink && hyperlink ? `<a target="_blank" href="${hyperlink}">${name}</a>` : name;
 
-        tableData.forEach(function(rowData) {
-            var row = table.insertRow(-1);
-            rowData.forEach(function(cellData) {
-                var cell = row.insertCell();
-                cell.innerHTML = cellData;
-            });
-            var deleteCell = row.insertCell();
-            deleteCell.innerHTML = `<button class="delete-btn" onclick="deleteRow(this)">Delete</button>`;
-        });
-    }
-}
+            // For Hyperlink column: if there's a hyperlink, make the text a clickable link
+            var displayText = capacity || 'N/A'; // Default to 'N/A' if nothing is entered
 
-// Call this function when the page loads to restore table data
-window.onload = function() {
-    loadTableFromLocalStorage();
-};
+            // If hyperlink is provided, wrap the text in an <a> tag to make it clickable
+            var displayContent = hyperlink ? `<a target="_blank" href="${hyperlink}">${displayText}</a>` : displayText;
 
-// Update the link if user modifies the hyperlink column
-function updateLink(row, cellIndex) {
-    var cell = row.cells[cellIndex];
-    var text = cell.innerText.trim();
+            row.innerHTML = `
+                <td>${nameCell}</td>
+                <td>${year}</td>
+                <td>${dataType}</td>
+                <td contenteditable="true" onblur="updateLink(this.parentNode, 3)">
+                    ${displayContent}
+                </td>
+                <td>
+                  <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+                  <button class="pin-btn" onclick="pinRow(this)">top</button>
+                </td>
+            `;
+            row.setAttribute("data-pinned","false");
 
-    // Check if the content is a valid URL and if so, update the cell to be a hyperlink
-    if (text && (text.startsWith('http://') || text.startsWith('https://'))) {
-        cell.innerHTML = `<a target="_blank" href="${text}">${text}</a>`;
-    } else {
-        cell.innerHTML = text || 'N/A';
-    }
-}
+            // Save the current table data to localStorage
+            saveTableToLocalStorage();
+        }
 
-
-
-
-
+        // Update the hyperlink in the table when the user edits the cell
         function updateLink(row, cellIndex) {
             var cell = row.cells[cellIndex];
             var url = cell.innerText.trim();
@@ -353,13 +342,71 @@ function updateLink(row, cellIndex) {
                 // If the text is not a valid URL, leave it as plain text or 'N/A'
                 cell.innerHTML = url || 'N/A';
             }
+
+            // After updating the link, save the table to localStorage again
+            saveTableToLocalStorage();
         }
 
+        // Delete a row
         function deleteRow(btn) {
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
+
+            // After deleting the row, save the updated table to localStorage
+            saveTableToLocalStorage();
         }
 
+        // Save the current table data to localStorage
+        function saveTableToLocalStorage() {
+            var table = document.getElementById("myTable");
+            var rows = table.getElementsByTagName("tr");
+            var tableData = [];
+
+            for (var i = 1; i < rows.length; i++) { // Skip the header row
+                var row = rows[i];
+                var rowData = [];
+
+                for (var j = 0; j < row.cells.length - 1; j++) { // Skip the last cell (Action)
+                    var cell = row.cells[j];
+                    rowData.push(cell.innerHTML);
+                }
+
+                tableData.push(rowData);
+            }
+
+            // Save table data to localStorage（保持原逻辑，不存 pinned 状态）
+            localStorage.setItem('tableData', JSON.stringify(tableData));
+        }
+
+        // Load the table data from localStorage
+        function loadTableFromLocalStorage() {
+            var tableData = localStorage.getItem('tableData');
+            if (tableData) {
+                tableData = JSON.parse(tableData);
+                var table = document.getElementById("myTable");
+
+                tableData.forEach(function(rowData) {
+                    var row = table.insertRow(-1);
+                    rowData.forEach(function(cellData) {
+                        var cell = row.insertCell();
+                        cell.innerHTML = cellData;
+                    });
+                    var deleteCell = row.insertCell();
+                    deleteCell.innerHTML = `
+                      <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+                      <button class="pin-btn" onclick="pinRow(this)">top</button>
+                    `;
+                    row.setAttribute("data-pinned","false");
+                });
+            }
+        }
+
+        // Call this function when the page loads to restore table data
+        window.onload = function() {
+            loadTableFromLocalStorage();
+        };
+
+        // 保留你原先重复的 updateLink / deleteRow（不再重复定义），以下保持不动
         function downloadPage() {
             const link = document.createElement('a');
             link.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(document.documentElement.outerHTML);
@@ -449,8 +496,12 @@ function handleFileUpload(event) {
                         <td contenteditable="true" onblur="updateLink(this.parentNode, 3)">
                             ${displayContent}
                         </td>
-                        <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+                        <td>
+                          <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+                          <button class="pin-btn" onclick="pinRow(this)">top</button>
+                        </td>
                     `;
+                    row.setAttribute("data-pinned","false");
                 }
             });
         };
@@ -482,8 +533,6 @@ function isRowDuplicate(name, hyperlink, year, dataType) {
     return false; // Row is not a duplicate
 }
 
-
-
     </script> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script> 
  </head> 
@@ -492,32 +541,16 @@ function isRowDuplicate(name, hyperlink, year, dataType) {
    <div class="input-container"> 
     <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Search for Data.." /> 
     <button class="clear-btn" onclick="clearInput()">✕</button> 
-    <button class="btn" onclick="startSpeechRecognition()"><i class="fas fa-microphone icon"></i></button> 
-
-
-
     <button class="btn add add-xlsx-btn" title="upload xlsx"  onclick="document.getElementById('file-input').click()">
         <i class="fas fa-plus icon"></i> 
     </button>
     <input type="file" id="file-input" style="display: none;" accept=".xlsx" onchange="handleFileUpload(event)" />
-
-
     <button class="btn download-xlsx-btn" title="download xlsx" onclick="downloadXLSX()">
         <i class="fa fa-download"></i>
       </button>
 
     <button class="btn" title="download html"  onclick="downloadPage()"><i class="fab fa-chrome"></i></button>
-    <button class="btn" title="edit"onclick="window.open('https://github.com/ChatPuck/chatpuck.github.io/blob/main/static/xlsx.html')"><i class="fas fa-cog"></i></button> 
-
-<!--     
-        <button class="btn" title="add data"  onclick="addRow()"><i class="fas fa-plus icon"></i></button>
-    <button class="btn" title="add data"  onclick="addRow()"><i class="fas fa-plus icon"></i></button>
-        <button class="btn download-xlsx-btn" title="download xlsx"  onclick="downloadXLSX()"><i class="fa fa-download"></i></button> 
-<button class="btn" onclick="window.open('https://github.com/feeday/blog/blob/main/static/xlsx/index.html', '_blank')">
-  <i class="fas fa-file-excel icon"></i>
-</button>
-    -->
-
+    <button class="btn" title="edit"onclick="window.open('https://github.com/tcq20256/realfake.top/edit/main/index.html')"><i class="fas fa-cog"></i></button> 
    </div> 
    <table id="myTable"> 
     <tbody>
@@ -528,118 +561,94 @@ function isRowDuplicate(name, hyperlink, year, dataType) {
       <th onclick="sortTable(3)">Hyperlink</th> 
       <th>Action</th> 
      </tr> 
-     <tr> 
-      <td><a target="_blank" href="https://github.com/deepseek-ai/DeepSeek-R1">DeepSeek-R1</a></td> 
-      <td>202501</td> 
-      <td>Code-LLM</td> 
-      <td><a target="_blank" href="https://github.com/deepseek-ai/DeepSeek-R1">https://github.com/deepseek-ai/DeepSeek-R1</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr> 
-      <tr> 
-      <td><a target="_blank" href="https://chat.scnet.cn">DeepSeek-R1</a></td> 
-      <td>202502</td> 
-      <td>Web-LLM</td> 
-      <td><a target="_blank" href="https://chat.scnet.cn">https://chat.scnet.cn</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr>
-           <tr> 
-      <td><a target="_blank" href="https://www.superclueai.com">SuperCLUE</a></td> 
-      <td>202502</td> 
-      <td>Ranking-AIGC</td> 
-      <td><a target="_blank" href="https://www.superclueai.com/">https://www.superclueai.com</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr>
-           <tr> 
-      <td><a target="_blank" href="https://livebench.ai">LiveBench</a></td> 
-      <td>202502</td> 
-      <td>Ranking-AIGC</td> 
-      <td><a target="_blank" href="https://livebench.ai">https://livebench.ai</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr>
 
-   
-           <tr> 
-      <td><a target="_blank" href="https://www.iresearch.com.cn/report.shtml">IResearch</a></td> 
-      <td>202502</td> 
-      <td>PDF-Report</td> 
-      <td><a target="_blank" href="https://www.iresearch.com.cn/report.shtml">https://www.iresearch.com.cn/report.shtml</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr>
-           <tr> 
-      <td><a target="_blank" href="https://www.tradingview.com/markets/?aff_id=149508">TradingView</a></td> 
-      <td>202502</td> 
-      <td>Deal-Price</td> 
-      <td><a target="_blank" href="https://www.tradingview.com/markets/?aff_id=149508">https://www.tradingview.com/markets</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr>
-    
-     <tr> 
-        <td><a target="_blank" href="https://www.w3schools.com/icons/icons_reference.asp">Font Awesome 5</a></td> 
-        <td>201707</td> 
-        <td>Web-Image</td> 
-        <td><a target="_blank" href="https://www.w3schools.com/icons/icons_reference.asp">https://www.w3schools.com/icons/icons_reference.asp</a></td> 
-        <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-       </tr>
-      <tr> 
-      <td><a target="_blank" href="https://chatgpt.com/">ChatGPT</a></td> 
-      <td>202303</td> 
-      <td>Web-LLM</td> 
-      <td><a target="_blank" href="https://chatgpt.com/">https://chatgpt.com</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr> 
-
-      <tr> 
-      <td><a target="_blank" href="https://jimeng.jianying.com/ai-tool/home">Jimeng</a></td> 
-      <td>202502</td> 
-      <td>Web-AIGC</td> 
+     <tr data-pinned="false"> 
+      <td><a target="_blank" href="https://www.doubao.com/chat/create-image">Seedream-4.0</a></td> 
+      <td>202509</td> 
+      <td>Models-Image-Gen</td> 
       <td><a target="_blank" href="https://jimeng.jianying.com/ai-tool/home">https://jimeng.jianying.com/ai-tool/home</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        <button class="pin-btn" onclick="pinRow(this)">top</button>
+      </td> 
      </tr> 
-
-      <tr> 
-      <td><a target="_blank" href="https://www.midjourney.com/explore">Midjourney</a></td> 
-      <td>202502</td> 
-      <td>Web-AIGC</td> 
-      <td><a target="_blank" href="https://www.midjourney.com/explore">https://www.midjourney.com/explore</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr> 
-
-      <tr> 
-      <td><a target="_blank" href="https://ai-bot.cn/ai-tools/">AI-Bot</a></td> 
-      <td>202502</td> 
-      <td>Message-AIGC</td> 
-      <td><a target="_blank" href="https://ai-bot.cn/ai-tools/">https://ai-bot.cn/ai-tools</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr> 
-      <tr> 
-      <td><a target="_blank" href="https://huggingface.co/spaces/Sanster/Lama-Cleaner-lama">Lama-Cleaner</a></td> 
-      <td>202502</td> 
-      <td>Web-Image</td> 
-      <td><a target="_blank" href="https://huggingface.co/spaces/Sanster/Lama-Cleaner-lama">https://huggingface.co/spaces/Sanster/Lama-Cleaner-lama</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
+     <tr data-pinned="false"> 
+      <td><a target="_blank" href="https://huggingface.co/spaces/Qwen/Qwen-Image-Edit">Qwen-Image-Edit</a></td> 
+      <td>202508</td> 
+      <td>Models-Image-Gen</td> 
+      <td><a target="_blank" href="https://github.com/QwenLM/Qwen-Image">https://github.com/QwenLM/Qwen-Image</a></td> 
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        <button class="pin-btn" onclick="pinRow(this)">top</button>
+      </td> 
      </tr> 
      
-      <tr> 
-      <td><a target="_blank" href="https://chat18.aichatos18.com/">AIchatOS2</a></td> 
-      <td>202502</td> 
-      <td>Web-LLM</td> 
-      <td><a target="_blank" href="https://chat18.aichatos18.com/">https://chat18.aichatos18.com</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
-     </tr>
-       <tr> 
-      <td><a target="_blank" href="https://wormhole.app/">Wormhole</a></td> 
-      <td>202502</td> 
-      <td>Files-Share</td> 
-      <td><a target="_blank" href="https://wormhole.app">https://wormhole.app</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
+     <tr data-pinned="false"> 
+      <td><a target="_blank" href="https://huggingface.co/spaces/multimodalart/nano-banana">Nano-Banana</a></td> 
+      <td>202508</td> 
+      <td>Models-Image-Gen</td> 
+      <td><a target="_blank" href="https://gemini.google.com/app">https://gemini.google.com/app</a></td> 
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        <button class="pin-btn" onclick="pinRow(this)">top</button>
+      </td> 
      </tr> 
-     <tr> 
+     
+     <tr data-pinned="false"> 
+      <td><a target="_blank" href="https://fal.ai/models/fal-ai/pixverse/v5/image-to-video">PixVerse-V5</a></td> 
+      <td>202508</td> 
+      <td>Models-Video-Gen</td> 
+      <td><a target="_blank" href="https://app.pixverse.ai/create/image-text">https://app.pixverse.ai/create/image-text</a></td> 
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        <button class="pin-btn" onclick="pinRow(this)">top</button>
+      </td> 
+     </tr> 
+     
+     <tr data-pinned="false"> 
+      <td><a target="_blank" href="https://huggingface.co/spaces/black-forest-labs/FLUX.1-Kontext-Dev">FLUX.1-Kontext-Dev</a></td> 
+      <td>202506</td> 
+      <td>Models-Image-Gen</td> 
+      <td><a target="_blank" href="https://github.com/black-forest-labs/flux">https://github.com/black-forest-labs/flux</a></td> 
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        <button class="pin-btn" onclick="pinRow(this)">top</button>
+      </td> 
+     </tr> 
+     
+     <tr data-pinned="false"> 
       <td><a target="_blank" href="https://www.seeprettyface.com/mydataset.html">StyleGAN</a></td> 
       <td>202012</td> 
-      <td>Dataset-Image-Face</td> 
+      <td>Datasets-Image-Fake</td> 
       <td><a target="_blank" href="https://www.seeprettyface.com">https://www.seeprettyface.com</a></td> 
-      <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td> 
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        <button class="pin-btn" onclick="pinRow(this)">top</button>
+      </td> 
      </tr> 
+
+
+      <tr data-pinned="false"> 
+      <td><a target="_blank" href="https://www.pexels.com/zh-cn/new-photos/">Pixabay</a></td> 
+      <td>201401</td> 
+      <td>Website-Image-Real</td> 
+      <td><a target="_blank" href="https://www.pexels.com/">https://www.pexels.com</a></td> 
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        <button class="pin-btn" onclick="pinRow(this)">top</button>
+      </td> 
+     </tr> 
+      
+     <tr data-pinned="false"> 
+      <td><a target="_blank" href="https://sketchfab.com/3d-models/categories/people">Sketchfab</a></td> 
+      <td>201206</td> 
+      <td>Website-3D-models</td> 
+      <td><a target="_blank" href="https://sketchfab.com">https://sketchfab.com</a></td> 
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+        <button class="pin-btn" onclick="pinRow(this)">top</button>
+      </td> 
+     </tr>  
     </tbody>
    </table> 
   </div> 
