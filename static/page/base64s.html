@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>─=≡Σ((( つ•̀ω•́)つ</title>
+<style>
+*{box-sizing:border-box}
+body{
+font-family:Arial, sans-serif;margin:0;padding:0;background:#f4f4f9;color:#333;
+min-height:100vh;display:flex;justify-content:center;align-items:center;
+}
+.container{
+background:#fff;padding:20px;width:100%;height:100%;max-width:980px;
+box-shadow:0 0 10px rgba(0,0,0,.1);border-radius:8px;text-align:center;overflow-y:auto;
+}
+textarea{
+width:100%;min-height:220px;margin-bottom:10px;border:1px solid #ccc;border-radius:4px;
+padding:10px;font-size:14px;resize:vertical;
+}
+.button{
+background:#4CAF50;color:#fff;border:none;padding:7px 12px;margin:5px;border-radius:4px;
+cursor:pointer;transition:.3s;white-space:nowrap;font-size:12px;
+}
+.button:hover{background:#45a049}
+.button[disabled]{opacity:.6;cursor:not-allowed}
+.button-group,.input-group,.button-container{
+display:flex;flex-wrap:nowrap;justify-content:flex-start;
+overflow-x:auto;margin-bottom:12px;gap:6px;
+}
+
+input[type="file"],input[type="number"],input[type="text"]{
+padding:10px;margin-bottom:12px;border-radius:4px;border:1px solid #ccc;width:100%;
+}
+
+#dropZone{
+border:1px dashed #bbb;border-radius:6px;padding:10px;margin-bottom:12px;color:#666;font-size:12px;
+}
+#dropZone.dragover{border-color:#4CAF50;color:#4CAF50;background:#f6fff6}
+
+.output img,.output audio,.output video,#displayedImage{max-width:100%;max-height:420px;margin-top:10px}
+#imageDisplayContainer{display:none;margin-bottom:10px}
+.image-time{margin-top:5px;font-size:.85em;color:#666}
+.edit-buttons{display:none;margin-top:12px}
+.edit-buttons .button{margin:5px}
+#mediaPreviewContainer{display:none;margin-top:8px}
+#mediaPreviewContainer video,#mediaPreviewContainer audio{max-width:100%;max-height:420px}
+
+/* 响应面板 */
+#responseWrap{display:none;text-align:left}
+#response{
+white-space:pre-wrap;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;
+background:#0b1020;color:#cbe4ff;border-radius:6px;padding:10px;font-size:12px;max-height:280px;overflow:auto;
+}
+#respBar{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+#respStatus{font-size:12px;color:#666}
+
+/* 帧控件默认隐藏，仅“视频帧”模式显示 */
+#frameControls{display:none}
+#framePager{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+
+<input type="file" id="fileInput" accept="image/*,audio/*,video/*" />
+<input type="number" id="intervalInput" min="1" placeholder="1秒查看几帧：帧率 (仅视频)" />
+
+<div class="button-group">
+<button class="button" id="btnToB64">转码</button>
+<button class="button" id="btnFromB64">转文</button>
+<button class="button" id="btnFrames">提帧</button>
+<button class="button" id="btnClearOutput">清空</button>
+</div>
+
+<textarea id="textarea" placeholder="输入文本或粘贴 Base64 数据。"></textarea>
+
+
+<div style="text-align:center; margin-top:1px; padding:0 2px;">
+<div id="imageDisplayContainer">
+<img id="displayedImage" src="" alt="Extracted Frame" />
+<div id="imageTimeLabel" class="image-time"></div>
+
+<!-- 帧控件（仅视频抽帧模式显示） -->
+<div class="button-container" id="frameControls" style="text-align:center;">
+<button class="button" id="prevButton">上帧 (←)</button>
+<button class="button" id="btnDownloadFrame">下载当前帧</button>
+<button class="button" id="nextButton">下帧 (→)</button>
+</div>
+<div class="image-time" id="framePager">0 / 0</div>
+</div>
+
+<div id="mediaPreviewContainer">
+<div id="mediaPreview" style="display:flex;justify-content:center;align-items:center;flex-direction:column;gap:8px;"></div>
+<div class="button-container" style="text-align:center;">
+<button class="button" id="btnDownloadMedia">下载媒体</button>
+<button class="button" id="btnCloseMedia">关闭预览</button>
+</div>
+</div>
+
+<div class="edit-buttons" id="editButtons">
+<button class="button" id="btnInvert">反色</button>
+<button class="button" id="btnGray">去色</button>
+<button class="button" id="btnRestore">还原</button>
+<button class="button" id="btnDownloadImage">下载图片</button>
+</div>
+</div>
+
+
+<!-- 隐藏的 key 占位（保留，不参与逻辑） -->
+</div>
+
+<script>
+/* ===== 简易选择器（空值保护） ===== */
+const $ = id => document.getElementById(id);
+const on = (el, evt, fn) => el && el.addEventListener(evt, fn);
+
+/* ===== DOM ===== */
+const textarea = $("textarea");
+const response = $("response");
+const responseWrap = $("responseWrap");
+const respStatus = $("respStatus");
+const btnCopyResp = $("btnCopyResp");
+const btnHideResp = $("btnHideResp");
+
+const fileInput = $("fileInput");
+const intervalInput = $("intervalInput");
+const btnToB64 = $("btnToB64");
+const btnFromB64 = $("btnFromB64");
+const btnFrames = $("btnFrames");
+const btnClearOutput = $("btnClearOutput");
+
+const imageDisplayContainer = $("imageDisplayContainer");
+const displayedImage = $("displayedImage");
+const imageTimeLabel = $("imageTimeLabel");
+const framePager = $("framePager");
+const prevButton = $("prevButton");
+const nextButton = $("nextButton");
+const btnDownloadFrame = $("btnDownloadFrame");
+
+const editButtons = $("editButtons");
+const btnInvert = $("btnInvert");
+const btnGray = $("btnGray");
+const btnRestore = $("btnRestore");
+const btnDownloadImage = $("btnDownloadImage");
+
+const dropZone = $("dropZone");
+
+const mediaPreviewContainer = $("mediaPreviewContainer");
+const mediaPreview = $("mediaPreview");
+const btnDownloadMedia = $("btnDownloadMedia");
+const btnCloseMedia = $("btnCloseMedia");
+
+const frameControls = $("frameControls");
+
+/* ===== 状态 ===== */
+let video = null;
+let images = [];
+let currentImageIndex = -1;
+let currentImage = null;
+let currentFilter = "";
+let currentMediaDataURL = "";
+let isFrameMode = false; // 仅“视频帧”时为 true
+
+/* ===== 工具 ===== */
+function showResponse(show=true){ if(responseWrap) responseWrap.style.display = show ? 'block' : 'none'; }
+function setRespStatus(text){ if(respStatus) respStatus.textContent = text; }
+function setBusy(btn, busy=true, busyLabel='处理中…'){
+if(!btn) return;
+btn.disabled = !!busy;
+if(!btn.dataset._text) btn.dataset._text = btn.textContent;
+btn.textContent = busy ? busyLabel : btn.dataset._text;
+}
+function parseMimeFromDataURI(dataURI){
+const m = /^data:([^;,]+)[^,]*,/.exec(dataURI);
+return m ? m[1].trim() : '';
+}
+
+/* ===== 统一视图切换 ===== */
+// mode: 'text' | 'image' | 'media'
+function setView(mode){
+if(mode === 'text'){
+textarea.style.display = 'block';
+imageDisplayContainer.style.display = 'none';
+editButtons.style.display = 'none';
+mediaPreviewContainer.style.display = 'none';
+mediaPreview.innerHTML = "";
+}else if(mode === 'image'){
+textarea.style.display = 'none';
+imageDisplayContainer.style.display = 'block';
+editButtons.style.display = 'block';
+mediaPreviewContainer.style.display = 'none';
+mediaPreview.innerHTML = "";
+}else if(mode === 'media'){
+textarea.style.display = 'none';
+imageDisplayContainer.style.display = 'none';
+editButtons.style.display = 'none';
+mediaPreviewContainer.style.display = 'block';
+}
+}
+
+/* 帧控件显隐（只在帧模式显示） */
+function updateFrameControls(){
+if(!frameControls || !framePager) return;
+if(isFrameMode){
+frameControls.style.display = 'flex';
+framePager.style.display = 'block';
+}else{
+frameControls.style.display = 'none';
+framePager.style.display = 'none';
+imageTimeLabel.textContent = '';
+}
+}
+
+/* ===== Base64/媒体 ===== */
+function createAudioElement(dataURL){ const a=document.createElement('audio'); a.controls=true;a.src=dataURL;a.preload='metadata'; return a; }
+function createVideoElement(dataURL){ const v=document.createElement('video'); v.controls=true;v.src=dataURL;v.preload='metadata'; return v; }
+
+function convertToBase64(){
+const file = fileInput.files?.[0];
+if(!file){ alert('请选择一个文件。'); return; }
+setBusy(btnToB64,true,'转码中…');
+
+const reader = new FileReader();
+reader.onload = e => {
+textarea.value = e.target.result;
+setView('text');
+setBusy(btnToB64,false);
+showResponse(true);
+setRespStatus('完成');
+response.textContent = '已转为 Data URL（Base64）。';
+};
+reader.onerror = () => { alert("文件读取失败"); setBusy(btnToB64,false); };
+reader.readAsDataURL(file);
+}
+
+function convertFromBase64(){
+const s = (textarea.value || '').trim();
+if(!s){ alert('请输入 Base64 字符串。'); return; }
+if(!s.startsWith('data:')){ alert('无效的 Base64 数据 URI（需形如 data:...;base64,...）'); return; }
+
+setBusy(btnFromB64,true,'解析中…');
+
+const mime = parseMimeFromDataURI(s);
+if(!mime){ alert('无法解析 MIME 类型'); setBusy(btnFromB64,false); return; }
+
+// 清理状态（重要：确保退出帧模式 → 隐藏帧控件）
+currentFilter = '';
+images = []; currentImageIndex = -1; currentImage = null;
+mediaPreview.innerHTML = ""; currentMediaDataURL = "";
+isFrameMode = false;
+updateFrameControls();
+
+try{
+if(mime.startsWith('image/')){
+displayedImage.src = s; currentImage = displayedImage; displayedImage.style.filter = currentFilter;
+setView('image');
+updateFrameControls(); // 非帧模式隐藏帧控件（解决“码转文件出现上/下帧按钮”）
+setTimeout(()=>imageDisplayContainer.scrollIntoView({behavior:'smooth', block:'center'}), 50);
+}else if(mime.startsWith('audio/')){
+mediaPreview.appendChild(createAudioElement(s)); currentMediaDataURL = s;
+setView('media');
+setTimeout(()=>mediaPreviewContainer.scrollIntoView({behavior:'smooth', block:'center'}), 50);
+}else if(mime.startsWith('video/')){
+mediaPreview.appendChild(createVideoElement(s)); currentMediaDataURL = s;
+setView('media');
+setTimeout(()=>mediaPreviewContainer.scrollIntoView({behavior:'smooth', block:'center'}), 50);
+}else{
+alert("该 Base64 内容不属于常见媒体类型，将保留在文本框内。");
+setView('text');
+}
+} finally {
+setBusy(btnFromB64,false);
+}
+}
+
+async function extractFrames(){
+const file = fileInput.files?.[0];
+const fps = parseInt(intervalInput.value,10);
+if(!file || !file.type.startsWith('video/')){ alert('请选择一个视频文件。'); return; }
+if(isNaN(fps) || fps<=0){ alert('请输入有效的帧率。'); return; }
+
+setBusy(btnFrames,true,'抽帧中…');
+
+const objectURL = URL.createObjectURL(file);
+video = document.createElement('video');
+video.preload='metadata'; video.src=objectURL;
+
+video.onloadedmetadata = ()=> {
+isFrameMode = true;       // 进入帧模式（只在这里开启）
+updateFrameControls();
+captureFrames(video, fps).finally(()=>{ setBusy(btnFrames,false); });
+};
+}
+
+function seekTo(video, t){
+return new Promise(resolve=>{
+const handler = ()=>{ video.removeEventListener('seeked', handler); resolve(); };
+video.addEventListener('seeked', handler, { once:true });
+video.currentTime = Math.min(t, Math.max(0, video.duration - 0.001));
+});
+}
+
+async function captureFrames(video, fps){
+images=[]; currentImageIndex=-1; currentFilter='';
+setView('image'); // 仅显示图片区
+updateFrameControls();      // 帧控件可见
+
+const frameDuration = 1 / fps;
+const total = Math.floor(video.duration * fps) + 1;
+let currentTime = 0;
+
+for(let i=0;i<total;i++){
+await seekTo(video, currentTime);
+const canvas = document.createElement('canvas');
+canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+const ctx = canvas.getContext('2d'); ctx.drawImage(video,0,0,canvas.width,canvas.height);
+images.push({ url: canvas.toDataURL('image/png'), time: currentTime });
+framePager.textContent = `${i+1} / ${total}`;
+imageTimeLabel.textContent = `进度: ${currentTime.toFixed(2)}s / ${video.duration.toFixed(2)}s`;
+currentTime += frameDuration;
+await new Promise(r=>setTimeout(r,0));
+}
+
+if(images.length>0){
+currentImageIndex=0; displayFrame();
+setTimeout(()=>imageDisplayContainer.scrollIntoView({behavior:'smooth', block:'center'}),50);
+}else{
+alert('未能从视频中提取到任何帧。'); setView('text');
+isFrameMode = false; updateFrameControls();
+}
+}
+
+function displayFrame(){
+if(currentImageIndex<0 || currentImageIndex>=images.length) return;
+const f = images[currentImageIndex];
+displayedImage.src = f.url; currentImage = displayedImage; displayedImage.style.filter = currentFilter;
+imageTimeLabel.textContent = isFrameMode ? `时长: ${f.time.toFixed(2)} 秒` : '';
+framePager.textContent = isFrameMode ? `${currentImageIndex+1} / ${images.length}` : '';
+}
+
+function showPreviousImage(){ if(currentImageIndex>0){ currentImageIndex--; displayFrame(); } }
+function showNextImage(){ if(currentImageIndex<images.length-1){ currentImageIndex++; displayFrame(); } }
+
+function downloadFrame(){
+if(!isFrameMode){ alert('当前不在视频帧模式'); return; }
+if(currentImageIndex<0 || images.length===0){ alert('请先查看一张图片以下载。'); return; }
+const f = images[currentImageIndex]; const a=document.createElement('a');
+a.href=f.url; a.download=`frame-${String(currentImageIndex+1).padStart(4,'0')}.png`; a.click();
+}
+
+function downloadImage(){
+if(!currentImage){ alert('请先查看一张图片以下载。'); return; }
+const canvas=document.createElement('canvas'); const ctx=canvas.getContext('2d');
+const w=currentImage.naturalWidth||currentImage.width; const h=currentImage.naturalHeight||currentImage.height;
+canvas.width=w; canvas.height=h; ctx.filter=currentFilter||'none'; ctx.drawImage(currentImage,0,0,w,h);
+const a=document.createElement('a'); a.href=canvas.toDataURL('image/png'); a.download='processed-image.png'; a.click();
+}
+
+on(btnDownloadMedia,'click', ()=>{
+if(!currentMediaDataURL) return;
+const mime = parseMimeFromDataURI(currentMediaDataURL);
+let ext = 'bin';
+if(mime.startsWith('audio/')) ext = mime.split('/')[1]||'audio';
+else if(mime.startsWith('video/')) ext = mime.split('/')[1]||'video';
+const a=document.createElement('a');
+a.href=currentMediaDataURL; a.download=`media.${ext.replace(/[^a-z0-9]/gi,'')}`; a.click();
+});
+on(btnCloseMedia,'click', ()=>{ currentMediaDataURL=""; mediaPreview.innerHTML=""; setView('text'); });
+
+function invertColors(){ currentFilter=(currentFilter+' invert(1)').trim(); if(currentImage) currentImage.style.filter = currentFilter; }
+function desaturateImage(){ currentFilter=(currentFilter+' grayscale(1)').trim(); if(currentImage) currentImage.style.filter = currentFilter; }
+function restoreImage(){ currentFilter=''; if(currentImage) currentImage.style.filter = currentFilter; }
+
+function clearOutput(){
+textarea.value = "";
+images=[]; currentImageIndex=-1; currentImage=null; currentFilter='';
+currentMediaDataURL=""; mediaPreview.innerHTML="";
+isFrameMode = false; updateFrameControls();
+setView('text');
+}
+
+/* ===== 事件绑定 ===== */
+on(btnToB64,'click', ()=>{
+convertToBase64();
+});
+on(btnFromB64,'click', convertFromBase64);
+on(btnFrames,'click', extractFrames);
+on(btnClearOutput,'click', clearOutput);
+
+on(prevButton,'click', showPreviousImage);
+on(nextButton,'click', showNextImage);
+on(btnDownloadFrame,'click', downloadFrame);
+
+on(btnInvert,'click', invertColors);
+on(btnGray,'click', desaturateImage);
+on(btnRestore,'click', restoreImage);
+on(btnDownloadImage,'click', downloadImage);
+
+on(btnCopyResp,'click', ()=>{ navigator.clipboard.writeText(response.textContent||""); });
+on(btnHideResp,'click', ()=>showResponse(false));
+
+/* 键盘切帧（仅在图片视图且为帧模式时响应） */
+window.addEventListener('keydown', e=>{
+if(imageDisplayContainer.style.display !== 'block' || !isFrameMode) return;
+if(e.key === 'ArrowLeft') showPreviousImage();
+else if(e.key === 'ArrowRight') showNextImage();
+});
+
+/* 拖拽上传 */
+if (dropZone){
+['dragenter','dragover','dragleave','drop'].forEach(evt=>{
+dropZone.addEventListener(evt, e=>{ e.preventDefault(); e.stopPropagation(); });
+});
+['dragenter','dragover'].forEach(evt=>{
+dropZone.addEventListener(evt, ()=>dropZone.classList.add('dragover'));
+});
+['dragleave','drop'].forEach(evt=>{
+dropZone.addEventListener(evt, ()=>dropZone.classList.remove('dragover'));
+});
+dropZone.addEventListener('drop', e=>{
+const files = e.dataTransfer.files;
+if(files && files.length){ fileInput.files = files; }
+});
+}
+
+/* 初始化 */
+setView('text'); updateFrameControls();
+</script>
+
+<!-- 第三方统计（原样保留） -->
+<script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+<script>LA.init({id:"JRHGRBPWC7lJIaXq", ck:"JRHGRBPWC7lJIaXq"});</script>
+</body>
+</html>
