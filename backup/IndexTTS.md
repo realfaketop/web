@@ -72,11 +72,11 @@ IndexTTS2：情感表达和持续时间控制的自动回归零样本文本转�
 
 | 名称 | 来源 | 类型 | 发布时间 | 用途 / 备注 |
 |------|------|------|----------|-------------|
+| DiDiSpeech | [GitHub](https://github.com/athena-team/DiDiSpeech) | 中文普通话语音 | 2021 | 部分语料被采样用于 SeedTTS test-zh 基准测试 |
 | ESD (Emotional Speech Dataset) | [GitHub](https://github.com/HLTSingapore/ESD) | 多语言情感语音数据集 | 2020 | 提供 29 小时情感语音，用于增强情感建模 |
 | Common Voice | [Mozilla Common Voice](https://commonvoice.mozilla.org/) | 多语言众包语音 | 2017 | 部分语料被采样用于 SeedTTS test-en 基准测试 |
-| DiDiSpeech | [HuggingFace](https://huggingface.co/datasets/didi-ai/DiDiSpeech) | 中文普通话语音 | 2021 | 部分语料被采样用于 SeedTTS test-zh 基准测试 |
-| LibriSpeech | [OpenSLR](https://www.openslr.org/12/) | 英语朗读语音 (有声书) | 2015 | 随机抽取 test-clean 子集，用于英语语音评测 |
 | AISHELL-1 | [OpenSLR](https://www.openslr.org/33/) | 中文普通话语音 | 2017 | 随机抽取 1,000 条语音作为测试集 |
+| LibriSpeech | [OpenSLR](https://www.openslr.org/12/) | 英语朗读语音 (有声书) | 2015 | 随机抽取 test-clean 子集，用于英语语音评测 |
 
 ---
 
