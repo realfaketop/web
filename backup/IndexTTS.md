@@ -64,6 +64,12 @@
   > [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
 
 
+## 📢 社区与支持
+
+* QQ 群：553460296 (No.1) / 663272642 (No.4)
+* Discord：[Join](https://discord.gg/uT32E7KDmy)
+* Email：[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)
+* 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
 
 ## ⚙️ 部署方法
 
@@ -118,15 +124,6 @@ tts = IndexTTS2(cfg_path="checkpoints/config.yaml", model_dir="checkpoints", use
 text = "Translate for me, what is a surprise!"
 tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path="gen.wav", verbose=True)
 ```
-
-
-## 📢 社区与支持
-
-* QQ 群：553460296 (No.1) / 663272642 (No.4)
-* Discord：[[Join](https://discord.gg/uT32E7KDmy)](https://discord.gg/uT32E7KDmy)
-* Email：[[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)](mailto:indexspeech@bilibili.com)
-* 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
-
 
 ## 运行代码
 
