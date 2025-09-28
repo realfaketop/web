@@ -47,7 +47,7 @@
 
 ---
 
-## 📄 论文
+## 📄 论文发布
 
 * **IndexTTS2**
 
@@ -64,7 +64,7 @@
   > [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
 
 
-## 📢 社区与支持
+## 📢 社区支持
 
 * QQ 群：553460296 (No.1) / 663272642 (No.4)
 * Discord：[Join](https://discord.gg/uT32E7KDmy)
@@ -146,7 +146,7 @@ apps:
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-feeday.py — IndexTTS2 批量生成（离线/脚本版）
+IndexTTS2 批量生成（离线/脚本版）
 - 自动安装依赖（含 modelscope / transformers / accelerate / WeTextProcessing / descript-audiotools）
 - 读取 in/1.txt（每行一句）和 in/ 下全部参考音频（wav/mp3/flac/m4a/ogg）
 - 做“音频 × 文本”笛卡尔积，生成到 out/
