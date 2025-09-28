@@ -1,4 +1,117 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>RealFake</title><link>https://realfake.top</link><description>BB Work No Money</description><copyright>RealFake</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://realfake.top</link></image><lastBuildDate>Fri, 26 Sep 2025 17:13:12 +0000</lastBuildDate><managingEditor>RealFake</managingEditor><ttl>60</ttl><webMaster>RealFake</webMaster><item><title>RealFakeTop</title><link>https://realfake.top/post/RealFakeTop.html</link><description>## 简介
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>RealFake</title><link>https://realfake.top</link><description>BB Work No Money</description><copyright>RealFake</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://realfake.top</link></image><lastBuildDate>Sun, 28 Sep 2025 13:42:03 +0000</lastBuildDate><managingEditor>RealFake</managingEditor><ttl>60</ttl><webMaster>RealFake</webMaster><item><title>IndexTTS</title><link>https://realfake.top/post/IndexTTS.html</link><description># IndexTTS2 要点整理
+
+## 📅 发布时间
+- **2025/09/08** 🔥 IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）  
+- **2025/05/14** IndexTTS-1.5 发布（提升模型稳定性和英文表现）  
+- **2025/03/25** IndexTTS-1.0 发布（开放权重和推理代码）  
+- **2025/02/12** 论文提交至 arXiv，并发布 Demo 与测试集  
+
+---
+
+## 🤖 最新模型
+- **IndexTTS-2**（当前最新版本，支持情感控制和时长控制）
+- 旧版本：IndexTTS-1.5 / IndexTTS-1.0  
+
+模型下载：
+- [HuggingFace](https://huggingface.co/IndexTeam/IndexTTS-2)  
+- [ModelScope](https://modelscope.cn/models/IndexTeam/IndexTTS-2)  
+
+---
+
+## 🎧 试用地址
+- **Demo 页面**：[IndexTTS2 Demo](https://github.com/index-tts/index-tts)  
+- **Web 界面快速启动**：
+  ```bash
+  uv run webui.py
+  # 浏览器访问 http://127.0.0.1:7860
+````
+
+---
+
+## 📄 论文
+
+* **IndexTTS2**
+
+  &gt; Zhou, Siyi; Zhou, Yiquan; He, Yi; Zhou, Xun; Wang, Jinchao; Deng, Wei; Shu, Jingchen
+  &gt; *IndexTTS2: A Breakthrough in Emotionally Expressive and Duration-Controlled Auto-Regressive Zero-Shot Text-to-Speech*
+  &gt; arXiv preprint arXiv:2506.21619 (2025)
+  &gt; [[Paper Link](https://arxiv.org/abs/2506.21619)](https://arxiv.org/abs/2506.21619)
+
+* **IndexTTS1**
+
+  &gt; Deng, Wei; Zhou, Siyi; Shu, Jingchen; Wang, Jinchao; Wang, Lu
+  &gt; *IndexTTS: An Industrial-Level Controllable and Efficient Zero-Shot Text-To-Speech System*
+  &gt; arXiv preprint arXiv:2502.05512 (2025)
+  &gt; [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
+
+---
+
+## ⚙️ 部署方法
+
+### 1. 安装依赖
+
+```bash
+# 安装 uv (推荐的依赖管理工具)
+pip install -U uv
+
+# 克隆项目
+git clone https://github.com/index-tts/index-tts.git &amp;&amp; cd index-tts
+git lfs install
+git lfs pull
+
+# 同步依赖
+uv sync --all-extras
+# 如果网络慢，可用国内镜像：
+uv sync --all-extras --default-index 'https://mirrors.aliyun.com/pypi/simple'
+```
+
+### 2. 下载模型
+
+```bash
+# HuggingFace
+uv tool install 'huggingface-hub[cli,hf_xet]'
+hf download IndexTeam/IndexTTS-2 --local-dir=checkpoints
+
+# 或 ModelScope
+uv tool install 'modelscope'
+modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints
+```
+
+### 3. 检查 GPU 环境
+
+```bash
+uv run tools/gpu_check.py
+```
+
+### 4. 启动 WebUI
+
+```bash
+uv run webui.py
+# 浏览器访问 http://127.0.0.1:7860
+```
+
+### 5. Python 调用示例
+
+```python
+from indextts.infer_v2 import IndexTTS2
+
+tts = IndexTTS2(cfg_path='checkpoints/config.yaml', model_dir='checkpoints', use_fp16=True)
+text = 'Translate for me, what is a surprise!'
+tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path='gen.wav', verbose=True)
+```
+
+---
+
+## 📢 社区与支持
+
+* QQ 群：553460296 (No.1) / 663272642 (No.4)
+* Discord：[[Join](https://discord.gg/uT32E7KDmy)](https://discord.gg/uT32E7KDmy)
+* Email：[[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)](mailto:indexspeech@bilibili.com)
+* 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
+
+---
+
+。</description><guid isPermaLink="true">https://realfake.top/post/IndexTTS.html</guid><pubDate>Sun, 28 Sep 2025 13:41:32 +0000</pubDate></item><item><title>RealFakeTop</title><link>https://realfake.top/post/RealFakeTop.html</link><description>## 简介
 
 专注于 **收集与整理“真实 / 虚假”互联网数据和开源数据集**。</description><guid isPermaLink="true">https://realfake.top/post/RealFakeTop.html</guid><pubDate>Fri, 26 Sep 2025 15:54:29 +0000</pubDate></item></channel></rss>
