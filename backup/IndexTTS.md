@@ -1,32 +1,49 @@
 # IndexTTS2 要点整理
 
 ## 📅 发布时间
-- **2025/09/08** 🔥 IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）  
+- **2025/09/08** IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）  
 - **2025/05/14** IndexTTS-1.5 发布（提升模型稳定性和英文表现）  
 - **2025/03/25** IndexTTS-1.0 发布（开放权重和推理代码）  
 - **2025/02/12** 论文提交至 arXiv，并发布 Demo 与测试集  
 
 ---
 
-## 🤖 最新模型
-- **IndexTTS-2**（当前最新版本，支持情感控制和时长控制）
-- 旧版本：IndexTTS-1.5 / IndexTTS-1.0  
+## 🤖 模型下载
 
-模型下载：
-- [HuggingFace](https://huggingface.co/IndexTeam/IndexTTS-2)  
-- [ModelScope](https://modelscope.cn/models/IndexTeam/IndexTTS-2)  
-
----
-
-## 🎧 试用地址
-- **Demo 页面**：[IndexTTS2 Demo](https://github.com/index-tts/index-tts)  
-- **Web 界面快速启动**：
-  ```bash
-  uv run webui.py
-  # 浏览器访问 http://127.0.0.1:7860
-````
+| **HuggingFace**                                          | **ModelScope** |
+|----------------------------------------------------------|----------------------------------------------------------|
+| [IndexTTS-2](https://huggingface.co/IndexTeam/IndexTTS-2) | [IndexTTS-2](https://modelscope.cn/models/IndexTeam/IndexTTS-2) |
+| [IndexTTS-1.5](https://huggingface.co/IndexTeam/IndexTTS-1.5) | [IndexTTS-1.5](https://modelscope.cn/models/IndexTeam/IndexTTS-1.5) |
+| [IndexTTS](https://huggingface.co/IndexTeam/Index-TTS) | [IndexTTS](https://modelscope.cn/models/IndexTeam/Index-TTS) |
 
 ---
+
+<div style="text-align:left">
+  <a href='https://arxiv.org/abs/2506.21619'>
+    <img src='https://img.shields.io/badge/ArXiv-2506.21619-red?logo=arxiv'/>
+  </a>
+  <br/>
+  <a href='https://github.com/index-tts/index-tts'>
+    <img src='https://img.shields.io/badge/GitHub-Code-orange?logo=github'/>
+  </a>
+  <a href='https://index-tts.github.io/index-tts2.github.io/'>
+    <img src='https://img.shields.io/badge/GitHub-Demo-orange?logo=github'/>
+  </a>
+  <br/>
+  <a href='https://huggingface.co/spaces/IndexTeam/IndexTTS-2-Demo'>
+    <img src='https://img.shields.io/badge/HuggingFace-Demo-blue?logo=huggingface'/>
+  </a>
+  <a href='https://huggingface.co/IndexTeam/IndexTTS-2'>
+    <img src='https://img.shields.io/badge/HuggingFace-Model-blue?logo=huggingface' />
+  </a>
+  <br/>
+  <a href='https://modelscope.cn/studios/IndexTeam/IndexTTS-2-Demo'>
+    <img src='https://img.shields.io/badge/ModelScope-Demo-purple?logo=modelscope'/>
+  </>
+  <a href='https://modelscope.cn/models/IndexTeam/IndexTTS-2'>
+    <img src='https://img.shields.io/badge/ModelScope-Model-purple?logo=modelscope'/>
+  </a>
+</div>
 
 ## 📄 论文
 
@@ -44,7 +61,7 @@
   > arXiv preprint arXiv:2502.05512 (2025)
   > [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
 
----
+
 
 ## ⚙️ 部署方法
 
@@ -100,7 +117,6 @@ text = "Translate for me, what is a surprise!"
 tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path="gen.wav", verbose=True)
 ```
 
----
 
 ## 📢 社区与支持
 
@@ -109,5 +125,18 @@ tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path="gen.
 * Email：[[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)](mailto:indexspeech@bilibili.com)
 * 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
 
----
 
+## 运行代码
+
+```
+# .vscode/preview.yml
+autoOpen: true # 打开工作空间时是否自动开启所有应用的预览
+apps:
+  - port: 7860 # 应用的端口
+    run: uv run webui.py
+    root: ./index-tts # 应用的启动目录
+    name: IndexTTS2  # 应用名称
+    description: IndexTTS2 # 应用描述
+    autoOpen: true # 打开工作空间时是否自动运行命令（优先级高于根级 autoOpen）
+    autoPreview: true # 是否自动打开预览, 若无则默认为true
+```

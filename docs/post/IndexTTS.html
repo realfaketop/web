@@ -13,32 +13,49 @@
 <meta name="description" content="# IndexTTS2 要点整理
 
 ## 📅 发布时间
-- **2025/09/08** 🔥 IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）  
+- **2025/09/08** IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）  
 - **2025/05/14** IndexTTS-1.5 发布（提升模型稳定性和英文表现）  
 - **2025/03/25** IndexTTS-1.0 发布（开放权重和推理代码）  
 - **2025/02/12** 论文提交至 arXiv，并发布 Demo 与测试集  
 
 ---
 
-## 🤖 最新模型
-- **IndexTTS-2**（当前最新版本，支持情感控制和时长控制）
-- 旧版本：IndexTTS-1.5 / IndexTTS-1.0  
+## 🤖 模型下载
 
-模型下载：
-- [HuggingFace](https://huggingface.co/IndexTeam/IndexTTS-2)  
-- [ModelScope](https://modelscope.cn/models/IndexTeam/IndexTTS-2)  
-
----
-
-## 🎧 试用地址
-- **Demo 页面**：[IndexTTS2 Demo](https://github.com/index-tts/index-tts)  
-- **Web 界面快速启动**：
-  ```bash
-  uv run webui.py
-  # 浏览器访问 http://127.0.0.1:7860
-````
+| **HuggingFace**                                          | **ModelScope** |
+|----------------------------------------------------------|----------------------------------------------------------|
+| [IndexTTS-2](https://huggingface.co/IndexTeam/IndexTTS-2) | [IndexTTS-2](https://modelscope.cn/models/IndexTeam/IndexTTS-2) |
+| [IndexTTS-1.5](https://huggingface.co/IndexTeam/IndexTTS-1.5) | [IndexTTS-1.5](https://modelscope.cn/models/IndexTeam/IndexTTS-1.5) |
+| [IndexTTS](https://huggingface.co/IndexTeam/Index-TTS) | [IndexTTS](https://modelscope.cn/models/IndexTeam/Index-TTS) |
 
 ---
+
+<div style='text-align:left'>
+  <a href='https://arxiv.org/abs/2506.21619'>
+    <img src='https://img.shields.io/badge/ArXiv-2506.21619-red?logo=arxiv'/>
+  </a>
+  <br/>
+  <a href='https://github.com/index-tts/index-tts'>
+    <img src='https://img.shields.io/badge/GitHub-Code-orange?logo=github'/>
+  </a>
+  <a href='https://index-tts.github.io/index-tts2.github.io/'>
+    <img src='https://img.shields.io/badge/GitHub-Demo-orange?logo=github'/>
+  </a>
+  <br/>
+  <a href='https://huggingface.co/spaces/IndexTeam/IndexTTS-2-Demo'>
+    <img src='https://img.shields.io/badge/HuggingFace-Demo-blue?logo=huggingface'/>
+  </a>
+  <a href='https://huggingface.co/IndexTeam/IndexTTS-2'>
+    <img src='https://img.shields.io/badge/HuggingFace-Model-blue?logo=huggingface' />
+  </a>
+  <br/>
+  <a href='https://modelscope.cn/studios/IndexTeam/IndexTTS-2-Demo'>
+    <img src='https://img.shields.io/badge/ModelScope-Demo-purple?logo=modelscope'/>
+  </>
+  <a href='https://modelscope.cn/models/IndexTeam/IndexTTS-2'>
+    <img src='https://img.shields.io/badge/ModelScope-Model-purple?logo=modelscope'/>
+  </a>
+</div>
 
 ## 📄 论文
 
@@ -56,7 +73,7 @@
   > arXiv preprint arXiv:2502.05512 (2025)
   > [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
 
----
+
 
 ## ⚙️ 部署方法
 
@@ -112,7 +129,6 @@ text = 'Translate for me, what is a surprise!'
 tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path='gen.wav', verbose=True)
 ```
 
----
 
 ## 📢 社区与支持
 
@@ -121,39 +137,68 @@ tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path='gen.
 * Email：[[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)](mailto:indexspeech@bilibili.com)
 * 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
 
----
 
-。">
+## 运行代码
+
+```
+# .vscode/preview.yml
+autoOpen: true # 打开工作空间时是否自动开启所有应用的预览
+apps:
+  - port: 7860 # 应用的端口
+    run: uv run webui.py
+    root: ./index-tts # 应用的启动目录
+    name: IndexTTS2  # 应用名称
+    description: IndexTTS2 # 应用描述
+    autoOpen: true # 打开工作空间时是否自动运行命令（优先级高于根级 autoOpen）
+    autoPreview: true # 是否自动打开预览, 若无则默认为true
+```。">
 <meta property="og:title" content="IndexTTS">
 <meta property="og:description" content="# IndexTTS2 要点整理
 
 ## 📅 发布时间
-- **2025/09/08** 🔥 IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）  
+- **2025/09/08** IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）  
 - **2025/05/14** IndexTTS-1.5 发布（提升模型稳定性和英文表现）  
 - **2025/03/25** IndexTTS-1.0 发布（开放权重和推理代码）  
 - **2025/02/12** 论文提交至 arXiv，并发布 Demo 与测试集  
 
 ---
 
-## 🤖 最新模型
-- **IndexTTS-2**（当前最新版本，支持情感控制和时长控制）
-- 旧版本：IndexTTS-1.5 / IndexTTS-1.0  
+## 🤖 模型下载
 
-模型下载：
-- [HuggingFace](https://huggingface.co/IndexTeam/IndexTTS-2)  
-- [ModelScope](https://modelscope.cn/models/IndexTeam/IndexTTS-2)  
-
----
-
-## 🎧 试用地址
-- **Demo 页面**：[IndexTTS2 Demo](https://github.com/index-tts/index-tts)  
-- **Web 界面快速启动**：
-  ```bash
-  uv run webui.py
-  # 浏览器访问 http://127.0.0.1:7860
-````
+| **HuggingFace**                                          | **ModelScope** |
+|----------------------------------------------------------|----------------------------------------------------------|
+| [IndexTTS-2](https://huggingface.co/IndexTeam/IndexTTS-2) | [IndexTTS-2](https://modelscope.cn/models/IndexTeam/IndexTTS-2) |
+| [IndexTTS-1.5](https://huggingface.co/IndexTeam/IndexTTS-1.5) | [IndexTTS-1.5](https://modelscope.cn/models/IndexTeam/IndexTTS-1.5) |
+| [IndexTTS](https://huggingface.co/IndexTeam/Index-TTS) | [IndexTTS](https://modelscope.cn/models/IndexTeam/Index-TTS) |
 
 ---
+
+<div style='text-align:left'>
+  <a href='https://arxiv.org/abs/2506.21619'>
+    <img src='https://img.shields.io/badge/ArXiv-2506.21619-red?logo=arxiv'/>
+  </a>
+  <br/>
+  <a href='https://github.com/index-tts/index-tts'>
+    <img src='https://img.shields.io/badge/GitHub-Code-orange?logo=github'/>
+  </a>
+  <a href='https://index-tts.github.io/index-tts2.github.io/'>
+    <img src='https://img.shields.io/badge/GitHub-Demo-orange?logo=github'/>
+  </a>
+  <br/>
+  <a href='https://huggingface.co/spaces/IndexTeam/IndexTTS-2-Demo'>
+    <img src='https://img.shields.io/badge/HuggingFace-Demo-blue?logo=huggingface'/>
+  </a>
+  <a href='https://huggingface.co/IndexTeam/IndexTTS-2'>
+    <img src='https://img.shields.io/badge/HuggingFace-Model-blue?logo=huggingface' />
+  </a>
+  <br/>
+  <a href='https://modelscope.cn/studios/IndexTeam/IndexTTS-2-Demo'>
+    <img src='https://img.shields.io/badge/ModelScope-Demo-purple?logo=modelscope'/>
+  </>
+  <a href='https://modelscope.cn/models/IndexTeam/IndexTTS-2'>
+    <img src='https://img.shields.io/badge/ModelScope-Model-purple?logo=modelscope'/>
+  </a>
+</div>
 
 ## 📄 论文
 
@@ -171,7 +216,7 @@ tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path='gen.
   > arXiv preprint arXiv:2502.05512 (2025)
   > [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
 
----
+
 
 ## ⚙️ 部署方法
 
@@ -227,7 +272,6 @@ text = 'Translate for me, what is a surprise!'
 tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path='gen.wav', verbose=True)
 ```
 
----
 
 ## 📢 社区与支持
 
@@ -236,9 +280,21 @@ tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path='gen.
 * Email：[[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)](mailto:indexspeech@bilibili.com)
 * 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
 
----
 
-。">
+## 运行代码
+
+```
+# .vscode/preview.yml
+autoOpen: true # 打开工作空间时是否自动开启所有应用的预览
+apps:
+  - port: 7860 # 应用的端口
+    run: uv run webui.py
+    root: ./index-tts # 应用的启动目录
+    name: IndexTTS2  # 应用名称
+    description: IndexTTS2 # 应用描述
+    autoOpen: true # 打开工作空间时是否自动运行命令（优先级高于根级 autoOpen）
+    autoPreview: true # 是否自动打开预览, 若无则默认为true
+```。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://realfake.top/post/IndexTTS.html">
 <meta property="og:image" content="https://github.githubassets.com/favicons/favicon.svg">
@@ -312,117 +368,134 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="markdown-body" id="postBody"><h1>IndexTTS2 要点整理</h1>
 <h2>📅 发布时间</h2>
 <ul>
-<li><strong>2025/09/08</strong> 🔥 IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）</li>
+<li><strong>2025/09/08</strong> IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）</li>
 <li><strong>2025/05/14</strong> IndexTTS-1.5 发布（提升模型稳定性和英文表现）</li>
 <li><strong>2025/03/25</strong> IndexTTS-1.0 发布（开放权重和推理代码）</li>
 <li><strong>2025/02/12</strong> 论文提交至 arXiv，并发布 Demo 与测试集</li>
 </ul>
 <hr>
-<h2>🤖 最新模型</h2>
-<ul>
-<li><strong>IndexTTS-2</strong>（当前最新版本，支持情感控制和时长控制）</li>
-<li>旧版本：IndexTTS-1.5 / IndexTTS-1.0</li>
-</ul>
-<p>模型下载：</p>
-<ul>
-<li><a href="https://huggingface.co/IndexTeam/IndexTTS-2" rel="nofollow">HuggingFace</a></li>
-<li><a href="https://modelscope.cn/models/IndexTeam/IndexTTS-2" rel="nofollow">ModelScope</a></li>
-</ul>
+<h2>🤖 模型下载</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th><strong>HuggingFace</strong></th>
+<th><strong>ModelScope</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://huggingface.co/IndexTeam/IndexTTS-2" rel="nofollow">IndexTTS-2</a></td>
+<td><a href="https://modelscope.cn/models/IndexTeam/IndexTTS-2" rel="nofollow">IndexTTS-2</a></td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/IndexTeam/IndexTTS-1.5" rel="nofollow">IndexTTS-1.5</a></td>
+<td><a href="https://modelscope.cn/models/IndexTeam/IndexTTS-1.5" rel="nofollow">IndexTTS-1.5</a></td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/IndexTeam/Index-TTS" rel="nofollow">IndexTTS</a></td>
+<td><a href="https://modelscope.cn/models/IndexTeam/Index-TTS" rel="nofollow">IndexTTS</a></td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
 <hr>
-<h2>🎧 试用地址</h2>
+<div>
+  <a href="https://arxiv.org/abs/2506.21619" rel="nofollow">
+    <img src="https://camo.githubusercontent.com/1a9f172aaef06d6e7926225eccf29ca34824c2f8f052c37a679500d54424432d/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f41725869762d323530362e32313631392d7265643f6c6f676f3d6172786976" data-canonical-src="https://img.shields.io/badge/ArXiv-2506.21619-red?logo=arxiv" style="max-width: 100%;">
+  </a>
+  <br>
+  <a href="https://github.com/index-tts/index-tts">
+    <img src="https://camo.githubusercontent.com/788c3c04c8438f70de6e26eafb5b6c18ca589a96f598e057c0a717eeb5515e93/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4769744875622d436f64652d6f72616e67653f6c6f676f3d676974687562" data-canonical-src="https://img.shields.io/badge/GitHub-Code-orange?logo=github" style="max-width: 100%;">
+  </a>
+  <a href="https://index-tts.github.io/index-tts2.github.io/" rel="nofollow">
+    <img src="https://camo.githubusercontent.com/cfdfd71aad82a4d089995b7c8476a530ba289333f1969104bc13b4423c8b7118/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4769744875622d44656d6f2d6f72616e67653f6c6f676f3d676974687562" data-canonical-src="https://img.shields.io/badge/GitHub-Demo-orange?logo=github" style="max-width: 100%;">
+  </a>
+  <br>
+  <a href="https://huggingface.co/spaces/IndexTeam/IndexTTS-2-Demo" rel="nofollow">
+    <img src="https://camo.githubusercontent.com/37cd4e1e93ae7f364dd9aff5e4555728f69c49bae9efb09af623b7932df55907/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f48756767696e67466163652d44656d6f2d626c75653f6c6f676f3d68756767696e6766616365" data-canonical-src="https://img.shields.io/badge/HuggingFace-Demo-blue?logo=huggingface" style="max-width: 100%;">
+  </a>
+  <a href="https://huggingface.co/IndexTeam/IndexTTS-2" rel="nofollow">
+    <img src="https://camo.githubusercontent.com/5914cc243d34c7f704548e5fe0997c1054f5dd128653f766fde4cd3b04520115/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f48756767696e67466163652d4d6f64656c2d626c75653f6c6f676f3d68756767696e6766616365" data-canonical-src="https://img.shields.io/badge/HuggingFace-Model-blue?logo=huggingface" style="max-width: 100%;">
+  </a>
+  <br>
+  <a href="https://modelscope.cn/studios/IndexTeam/IndexTTS-2-Demo" rel="nofollow">
+    <img src="https://camo.githubusercontent.com/fbb0d83d08f1ec959d3dc8dc04e60fbc5889378f7d1ed911d808c17eac86ade5/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4d6f64656c53636f70652d44656d6f2d707572706c653f6c6f676f3d6d6f64656c73636f7065" data-canonical-src="https://img.shields.io/badge/ModelScope-Demo-purple?logo=modelscope" style="max-width: 100%;">
+  
+  </a><a href="https://modelscope.cn/models/IndexTeam/IndexTTS-2" rel="nofollow">
+    <img src="https://camo.githubusercontent.com/f8e003e0889546b32eb29a1746d3ebc75e399f2ad240b2f98411c3994b1c172c/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4d6f64656c53636f70652d4d6f64656c2d707572706c653f6c6f676f3d6d6f64656c73636f7065" data-canonical-src="https://img.shields.io/badge/ModelScope-Model-purple?logo=modelscope" style="max-width: 100%;">
+  </a>
+</div>
+<h2>📄 论文</h2>
 <ul>
-<li><strong>Demo 页面</strong>：<a href="https://github.com/index-tts/index-tts">IndexTTS2 Demo</a></li>
-<li><strong>Web 界面快速启动</strong>：
-<div class="highlight highlight-source-shell"><pre class="notranslate">uv run webui.py
-<span class="pl-c"><span class="pl-c">#</span> 浏览器访问 http://127.0.0.1:7860</span></pre></div>
+<li>
+<p><strong>IndexTTS2</strong></p>
+<blockquote>
+<p>Zhou, Siyi; Zhou, Yiquan; He, Yi; Zhou, Xun; Wang, Jinchao; Deng, Wei; Shu, Jingchen<br>
+<em>IndexTTS2: A Breakthrough in Emotionally Expressive and Duration-Controlled Auto-Regressive Zero-Shot Text-to-Speech</em><br>
+arXiv preprint arXiv:2506.21619 (2025)<br>
+[<a href="https://arxiv.org/abs/2506.21619" rel="nofollow">Paper Link</a>](<a href="https://arxiv.org/abs/2506.21619" rel="nofollow">https://arxiv.org/abs/2506.21619</a>)</p>
+</blockquote>
+</li>
+<li>
+<p><strong>IndexTTS1</strong></p>
+<blockquote>
+<p>Deng, Wei; Zhou, Siyi; Shu, Jingchen; Wang, Jinchao; Wang, Lu<br>
+<em>IndexTTS: An Industrial-Level Controllable and Efficient Zero-Shot Text-To-Speech System</em><br>
+arXiv preprint arXiv:2502.05512 (2025)<br>
+[<a href="https://arxiv.org/abs/2502.05512" rel="nofollow">Paper Link</a>](<a href="https://arxiv.org/abs/2502.05512" rel="nofollow">https://arxiv.org/abs/2502.05512</a>)</p>
+</blockquote>
 </li>
 </ul>
-<pre class="notranslate"><code class="notranslate">
----
-
-## 📄 论文
-
-* **IndexTTS2**
-
-  &gt; Zhou, Siyi; Zhou, Yiquan; He, Yi; Zhou, Xun; Wang, Jinchao; Deng, Wei; Shu, Jingchen
-  &gt; *IndexTTS2: A Breakthrough in Emotionally Expressive and Duration-Controlled Auto-Regressive Zero-Shot Text-to-Speech*
-  &gt; arXiv preprint arXiv:2506.21619 (2025)
-  &gt; [[Paper Link](https://arxiv.org/abs/2506.21619)](https://arxiv.org/abs/2506.21619)
-
-* **IndexTTS1**
-
-  &gt; Deng, Wei; Zhou, Siyi; Shu, Jingchen; Wang, Jinchao; Wang, Lu
-  &gt; *IndexTTS: An Industrial-Level Controllable and Efficient Zero-Shot Text-To-Speech System*
-  &gt; arXiv preprint arXiv:2502.05512 (2025)
-  &gt; [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
-
----
-
-## ⚙️ 部署方法
-
-### 1. 安装依赖
-
-```bash
-# 安装 uv (推荐的依赖管理工具)
+<h2>⚙️ 部署方法</h2>
+<h3>1. 安装依赖</h3>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 安装 uv (推荐的依赖管理工具)</span>
 pip install -U uv
 
-# 克隆项目
-git clone https://github.com/index-tts/index-tts.git &amp;&amp; cd index-tts
+<span class="pl-c"><span class="pl-c">#</span> 克隆项目</span>
+git clone https://github.com/index-tts/index-tts.git <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">cd</span> index-tts
 git lfs install
 git lfs pull
 
-# 同步依赖
+<span class="pl-c"><span class="pl-c">#</span> 同步依赖</span>
 uv sync --all-extras
-# 如果网络慢，可用国内镜像：
-uv sync --all-extras --default-index "https://mirrors.aliyun.com/pypi/simple"
-```
-
-### 2. 下载模型
-
-```bash
-# HuggingFace
-uv tool install "huggingface-hub[cli,hf_xet]"
+<span class="pl-c"><span class="pl-c">#</span> 如果网络慢，可用国内镜像：</span>
+uv sync --all-extras --default-index <span class="pl-s"><span class="pl-pds">"</span>https://mirrors.aliyun.com/pypi/simple<span class="pl-pds">"</span></span></pre></div>
+<h3>2. 下载模型</h3>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> HuggingFace</span>
+uv tool install <span class="pl-s"><span class="pl-pds">"</span>huggingface-hub[cli,hf_xet]<span class="pl-pds">"</span></span>
 hf download IndexTeam/IndexTTS-2 --local-dir=checkpoints
 
-# 或 ModelScope
-uv tool install "modelscope"
-modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints
-```
+<span class="pl-c"><span class="pl-c">#</span> 或 ModelScope</span>
+uv tool install <span class="pl-s"><span class="pl-pds">"</span>modelscope<span class="pl-pds">"</span></span>
+modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints</pre></div>
+<h3>3. 检查 GPU 环境</h3>
+<div class="highlight highlight-source-shell"><pre class="notranslate">uv run tools/gpu_check.py</pre></div>
+<h3>4. 启动 WebUI</h3>
+<div class="highlight highlight-source-shell"><pre class="notranslate">uv run webui.py
+<span class="pl-c"><span class="pl-c">#</span> 浏览器访问 http://127.0.0.1:7860</span></pre></div>
+<h3>5. Python 调用示例</h3>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">indextts</span>.<span class="pl-s1">infer_v2</span> <span class="pl-k">import</span> <span class="pl-v">IndexTTS2</span>
 
-### 3. 检查 GPU 环境
-
-```bash
-uv run tools/gpu_check.py
-```
-
-### 4. 启动 WebUI
-
-```bash
-uv run webui.py
-# 浏览器访问 http://127.0.0.1:7860
-```
-
-### 5. Python 调用示例
-
-```python
-from indextts.infer_v2 import IndexTTS2
-
-tts = IndexTTS2(cfg_path="checkpoints/config.yaml", model_dir="checkpoints", use_fp16=True)
-text = "Translate for me, what is a surprise!"
-tts.infer(spk_audio_prompt='examples/voice_01.wav', text=text, output_path="gen.wav", verbose=True)
-```
-
----
-
-## 📢 社区与支持
-
-* QQ 群：553460296 (No.1) / 663272642 (No.4)
-* Discord：[[Join](https://discord.gg/uT32E7KDmy)](https://discord.gg/uT32E7KDmy)
-* Email：[[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)](mailto:indexspeech@bilibili.com)
-* 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
-
----
-
+<span class="pl-s1">tts</span> <span class="pl-c1">=</span> <span class="pl-en">IndexTTS2</span>(<span class="pl-s1">cfg_path</span><span class="pl-c1">=</span><span class="pl-s">"checkpoints/config.yaml"</span>, <span class="pl-s1">model_dir</span><span class="pl-c1">=</span><span class="pl-s">"checkpoints"</span>, <span class="pl-s1">use_fp16</span><span class="pl-c1">=</span><span class="pl-c1">True</span>)
+<span class="pl-s1">text</span> <span class="pl-c1">=</span> <span class="pl-s">"Translate for me, what is a surprise!"</span>
+<span class="pl-s1">tts</span>.<span class="pl-c1">infer</span>(<span class="pl-s1">spk_audio_prompt</span><span class="pl-c1">=</span><span class="pl-s">'examples/voice_01.wav'</span>, <span class="pl-s1">text</span><span class="pl-c1">=</span><span class="pl-s1">text</span>, <span class="pl-s1">output_path</span><span class="pl-c1">=</span><span class="pl-s">"gen.wav"</span>, <span class="pl-s1">verbose</span><span class="pl-c1">=</span><span class="pl-c1">True</span>)</pre></div>
+<h2>📢 社区与支持</h2>
+<ul>
+<li>QQ 群：553460296 (No.1) / 663272642 (No.4)</li>
+<li>Discord：[<a href="https://discord.gg/uT32E7KDmy" rel="nofollow">Join</a>](<a href="https://discord.gg/uT32E7KDmy" rel="nofollow">https://discord.gg/uT32E7KDmy</a>)</li>
+<li>Email：[<a href="mailto:indexspeech@bilibili.com">indexspeech@bilibili.com</a>](<a href="mailto:indexspeech@bilibili.com">mailto:indexspeech@bilibili.com</a>)</li>
+<li>官方仓库：<a href="https://github.com/index-tts/index-tts">https://github.com/index-tts/index-tts</a></li>
+</ul>
+<h2>运行代码</h2>
+<pre class="notranslate"><code class="notranslate"># .vscode/preview.yml
+autoOpen: true # 打开工作空间时是否自动开启所有应用的预览
+apps:
+  - port: 7860 # 应用的端口
+    run: uv run webui.py
+    root: ./index-tts # 应用的启动目录
+    name: IndexTTS2  # 应用名称
+    description: IndexTTS2 # 应用描述
+    autoOpen: true # 打开工作空间时是否自动运行命令（优先级高于根级 autoOpen）
+    autoPreview: true # 是否自动打开预览, 若无则默认为true
 </code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
 
