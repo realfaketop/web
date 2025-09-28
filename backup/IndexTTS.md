@@ -1,20 +1,10 @@
-# IndexTTS2 要点整理
+## 版本更新
 
-## 📅 发布时间
+
 - **2025/09/08** IndexTTS-2 发布（首个支持精确合成时长控制的自回归零样本文本转语音模型）  
 - **2025/05/14** IndexTTS-1.5 发布（提升模型稳定性和英文表现）  
 - **2025/03/25** IndexTTS-1.0 发布（开放权重和推理代码）  
 - **2025/02/12** 论文提交至 arXiv，并发布 Demo 与测试集  
-
----
-
-## 🤖 模型下载
-
-| **HuggingFace**                                          | **ModelScope** |
-|----------------------------------------------------------|----------------------------------------------------------|
-| [IndexTTS-2](https://huggingface.co/IndexTeam/IndexTTS-2) | [IndexTTS-2](https://modelscope.cn/models/IndexTeam/IndexTTS-2) |
-| [IndexTTS-1.5](https://huggingface.co/IndexTeam/IndexTTS-1.5) | [IndexTTS-1.5](https://modelscope.cn/models/IndexTeam/IndexTTS-1.5) |
-| [IndexTTS](https://huggingface.co/IndexTeam/Index-TTS) | [IndexTTS](https://modelscope.cn/models/IndexTeam/Index-TTS) |
 
 ---
 
@@ -44,6 +34,18 @@
     <img src='https://img.shields.io/badge/ModelScope-Model-purple?logo=modelscope'/>
   </a>
 </div>
+
+---
+
+## 🤖 模型下载
+
+| **HuggingFace**                                          | **ModelScope** |
+|----------------------------------------------------------|----------------------------------------------------------|
+| [IndexTTS-2](https://huggingface.co/IndexTeam/IndexTTS-2) | [IndexTTS-2](https://modelscope.cn/models/IndexTeam/IndexTTS-2) |
+| [IndexTTS-1.5](https://huggingface.co/IndexTeam/IndexTTS-1.5) | [IndexTTS-1.5](https://modelscope.cn/models/IndexTeam/IndexTTS-1.5) |
+| [IndexTTS](https://huggingface.co/IndexTeam/Index-TTS) | [IndexTTS](https://modelscope.cn/models/IndexTeam/Index-TTS) |
+
+---
 
 ## 📄 论文
 
