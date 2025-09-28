@@ -37,7 +37,7 @@
 
 ---
 
-## 🤖 模型下载
+## 模型下载
 
 | **HuggingFace**                                          | **ModelScope** |
 |----------------------------------------------------------|----------------------------------------------------------|
@@ -47,7 +47,7 @@
 
 ---
 
-## 📄 论文发布
+## 论文发布
 
 * **IndexTTS2**
 
@@ -64,14 +64,14 @@
   > [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
 
 
-## 📢 社区支持
+##  社区支持
 
 * QQ 群：553460296 (No.1) / 663272642 (No.4)
 * Discord：[Join](https://discord.gg/uT32E7KDmy)
 * Email：[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)
 * 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
 
-## ⚙️ 部署方法
+##  部署方法
 
 #### 1. 安装依赖
 
