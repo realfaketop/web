@@ -47,6 +47,16 @@
 
 ---
 
+
+##  社区支持
+
+* QQ 群：553460296 (No.1) / 663272642 (No.4)
+* Discord：[Join](https://discord.gg/uT32E7KDmy)
+* Email：[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)
+* 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
+
+---
+
 ## 论文发布
 
 * **IndexTTS2**
@@ -64,12 +74,92 @@
   > [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
 
 
-##  社区支持
+---
 
-* QQ 群：553460296 (No.1) / 663272642 (No.4)
-* Discord：[Join](https://discord.gg/uT32E7KDmy)
-* Email：[indexspeech@bilibili.com](mailto:indexspeech@bilibili.com)
-* 官方仓库：[https://github.com/index-tts/index-tts](https://github.com/index-tts/index-tts)
+## 论文概览
+
+### 摘要（Abstract）
+
+传统的语音合成方法有两类：  
+
+- **自动回归模型**：声音自然，但难以精准控制时长。  
+- **非自回归模型**：能精确控制时长，但自然度和情感较弱。  
+
+本文提出 **IndexTTS2**，首次在自动回归架构中实现：  
+
+- 精确的时长控制，  
+- 灵活的节奏模式，  
+- 分离式的声音身份与情感建模。  
+
+结果表明，该方法在自然度、时长控制和情感表达上均显著优于现有系统。  
+
+---
+
+### 引言（Introduction）
+
+- 大规模语言模型推动了 TTS 技术的快速发展，语音越来越接近人类自然语音。  
+- 现有方法存在两大问题：  
+  1. **难以同步时长**：如影视配音、动画对口型需要精准控制。  
+  2. **情感不够自然**：语音表达常显得平淡。  
+
+**IndexTTS2** 提供了解决方案：在保持自然度的同时，提供精确的时长和情感控制能力。  
+
+---
+
+### 方法（Methodology）
+
+#### 整体架构
+
+系统分为三部分：  
+
+1. **T2S（Text → Semantic Units）**  
+   - 输入：文字、说话人提示、情感提示、可选时长信息。  
+   - 输出：语义单元序列。  
+
+2. **S2M（Semantic Units → Mel-Spectrogram）**  
+   - 将语义与声学特征结合，生成语音频谱图。  
+   - 采用稳健结构，保证在强烈情绪下也能生成清晰语音。  
+
+3. **Vocoder（Mel-Spectrogram → Waveform）**  
+   - 将频谱图还原为真实音频。  
+
+#### 关键创新
+
+- **时长控制机制**：在自动回归框架中实现可控时长，支持严格模式与自由模式。  
+- **解耦声音身份与情感**：通过反向梯度层去除不相关信息，使得声音 timbre 与情感可独立控制。  
+- **情感建模增强**：利用 GPT 潜在表示提升在高强度情感下的稳定性。  
+- **灵活输入**：情感可通过文本提示指定（如 “angry”“happy”）。  
+
+---
+
+### 实验与结果（Experiments & Results）
+
+- **自然度**：IndexTTS2 的 MOS 评分优于主流方法。  
+- **时长准确性**：在配音场景中能精确控制时长。  
+- **情感表现力**：在“高强度情绪”语音生成上显著提升，避免失真。  
+- **零样本能力**：即使在未见过的声音或情感上，也能保持良好表现。  
+
+---
+
+### 结论（Conclusion）
+
+IndexTTS2 在自动回归 TTS 中实现了：  
+
+- 精准时长控制，  
+- 高质量情感表达，  
+- 声音身份与情感解耦，  
+- 出色的零样本泛化。  
+
+其潜力应用包括：  
+
+- 影视和动画配音（对口型要求严格），  
+- 游戏角色语音（需要多样情感），  
+- 个性化语音助手（不同声音和风格）。  
+
+未来工作方向包括更大规模的情感数据集和多模态条件控制。  
+
+
+---
 
 ##  部署方法
 
