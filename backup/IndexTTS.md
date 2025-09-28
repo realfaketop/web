@@ -57,64 +57,16 @@
 
 ---
 
-## 论文发布
-
-* **IndexTTS2**
-
-  > Zhou, Siyi; Zhou, Yiquan; He, Yi; Zhou, Xun; Wang, Jinchao; Deng, Wei; Shu, Jingchen
-  > *IndexTTS2: A Breakthrough in Emotionally Expressive and Duration-Controlled Auto-Regressive Zero-Shot Text-to-Speech*
-  > arXiv preprint arXiv:2506.21619 (2025)
-  > [[Paper Link](https://arxiv.org/abs/2506.21619)](https://arxiv.org/abs/2506.21619)
-
-* **IndexTTS1**
-
-  > Deng, Wei; Zhou, Siyi; Shu, Jingchen; Wang, Jinchao; Wang, Lu
-  > *IndexTTS: An Industrial-Level Controllable and Efficient Zero-Shot Text-To-Speech System*
-  > arXiv preprint arXiv:2502.05512 (2025)
-  > [[Paper Link](https://arxiv.org/abs/2502.05512)](https://arxiv.org/abs/2502.05512)
-
-
----
-
 ## 论文概览
 
-- **研究问题**  
-  - 自动回归 TTS：声音自然但时长难控  
-  - 非自回归 TTS：时长可控但自然度和情感不足  
+IndexTTS2：情感表达和持续时间控制的自动回归零样本文本转语音的突破
+[周思怡](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+S)， [周义全](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+Y)， [何毅](https://arxiv.org/search/cs?searchtype=author&query=He,+Y)， [周勋](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+X)， [王金超](https://arxiv.org/search/cs?searchtype=author&query=Wang,+J)， [邓伟](https://arxiv.org/search/cs?searchtype=author&query=Deng,+W)， [舒景晨](https://arxiv.org/search/cs?searchtype=author&query=Shu,+J)
+现有的自回归大规模文本转语音（TTS）模型在语音自然性方面具有优势，但其逐个标记的生成机制使得合成语音的持续时间难以精确控制。这在需要严格视听同步的应用（例如视频配音）中成为一个重大限制。本文介绍了IndexTTS2，该方法提出了一种新颖、通用、自回归的语音时长控制模型友好方法。该方法支持两种生成模式：一种明确指定生成的标记数量以精确控制语音持续时间;另一种以自回归的方式自由生成语音，无需指定标记的数量，同时忠实地再现输入提示的韵律特征。此外，IndexTTS2 实现了情感表达和说话者身份之间的解开，实现了对音色和情感的独立控制。在零样本设置中，模型可以准确地重建目标音色（来自音色提示），同时完美再现指定的情感音调（来自风格提示）。为了提高高度情感表达中的语音清晰度，我们结合了GPT潜在表示，并设计了一种新颖的三阶段训练范式，以提高生成语音的稳定性。此外，为了降低情绪控制的门槛，我们通过微调Qwen3设计了一种基于文本描述的软指令机制，有效地引导了具有所需情感取向的语音生成。最后，在多个数据集上的实验结果表明，IndexTTS2在单词错误率、说话人相似性和情感保真度方面优于最先进的零样本TTS模型。
 
-- **核心贡献（IndexTTS2）**  
-  - 在自动回归框架中首次实现 **精确时长控制**  
-  - **声音身份与情感解耦**，可独立控制  
-  - 支持 **严格时长模式** 与 **自由模式**  
-  - 强化 **情感建模**，高强度情绪仍稳定  
-  - 输入灵活：情感可用文本提示指定  
+[v2] 2025 年 9 月 3 日星期三 10：46：35 UTC （1,632 KB）
 
-- **实验结果**  
-  - 自然度（MOS）优于主流模型  
-  - 时长控制更精确，适合对口型场景  
-  - 情感表现力更强，避免高情绪失真  
-  - 零样本能力突出，能泛化到新声音/情绪  
-
-- **应用场景**  
-  - 影视/动画配音  
-  - 游戏角色语音  
-  - 个性化语音助手  
-
-- **未来方向**  
-  - 更大规模情感数据集  
-  - 多模态条件控制  
 
 ---
-
-## 相关模型
-
-| 名称 | 来源 | 类型 | 发布时间 | 用途 / 备注 |
-|------|------|------|----------|-------------|
-| MaskGCT | [GitHub](https://github.com/modelscope/MaskGCT) | 零样本文本转语音 (Zero-shot TTS) | 2024 | 作为零样本基线模型，对比 IndexTTS2 在语音质量与时长控制上的表现 |
-| F5-TTS | [GitHub](https://github.com/SWivid/F5-TTS) | 零样本 TTS / Diffusion 模型 | 2024 | 提供高自然度语音生成，对比 IndexTTS2 的情感与时长控制 |
-| CosyVoice2 | [HuggingFace](https://huggingface.co/netease-youdao/CosyVoice2) | 多语种 / 零样本 TTS | 2025 | 在跨语言和情感表达方面作为对比模型 |
-| SparkTTS | [GitHub](https://github.com/Lightning-AI/spark-tts) | 零样本 / 高速 TTS | 2024 | 强调快速推理与低延迟，对比 IndexTTS2 在自然度与灵活性 |
-
 
 ## 相关数据
 
@@ -447,4 +399,17 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
+```[提交于 2025 年 6 月 23 日 （[v1](https://arxiv.org/abs/2506.21619v1)），最后修订于 2025 年 9 月 3 日 （此版本，v2）]
+IndexTTS2：情感表达和持续时间控制的自动回归零样本文本转语音的突破
+[周思怡](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+S)， [周义全](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+Y)， [何毅](https://arxiv.org/search/cs?searchtype=author&query=He,+Y)， [周勋](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+X)， [王金超](https://arxiv.org/search/cs?searchtype=author&query=Wang,+J)， [邓伟](https://arxiv.org/search/cs?searchtype=author&query=Deng,+W)， [舒景晨](https://arxiv.org/search/cs?searchtype=author&query=Shu,+J)
+现有的自回归大规模文本转语音（TTS）模型在语音自然性方面具有优势，但其逐个标记的生成机制使得合成语音的持续时间难以精确控制。这在需要严格视听同步的应用（例如视频配音）中成为一个重大限制。本文介绍了IndexTTS2，该方法提出了一种新颖、通用、自回归的语音时长控制模型友好方法。该方法支持两种生成模式：一种明确指定生成的标记数量以精确控制语音持续时间;另一种以自回归的方式自由生成语音，无需指定标记的数量，同时忠实地再现输入提示的韵律特征。此外，IndexTTS2 实现了情感表达和说话者身份之间的解开，实现了对音色和情感的独立控制。在零样本设置中，模型可以准确地重建目标音色（来自音色提示），同时完美再现指定的情感音调（来自风格提示）。为了提高高度情感表达中的语音清晰度，我们结合了GPT潜在表示，并设计了一种新颖的三阶段训练范式，以提高生成语音的稳定性。此外，为了降低情绪控制的门槛，我们通过微调Qwen3设计了一种基于文本描述的软指令机制，有效地引导了具有所需情感取向的语音生成。最后，在多个数据集上的实验结果表明，IndexTTS2在单词错误率、说话人相似性和情感保真度方面优于最先进的零样本TTS模型。音频示例可在以下位置获得：[此 https URL](https://index-tts.github.io/index-tts2.github.io/)
+科目：	计算和语言 （cs.CL）;人工智能 （cs.人工智能）;声音 （cs.SD）;音频和语音处理 （eess.AS）
+引用为：	[arXiv：2506.21619](https://arxiv.org/abs/2506.21619) [cs.CL]
+ 	（或 [arXiv：2506.21619v2](https://arxiv.org/abs/2506.21619v2) [cs.CL] 对于此版本）
+ 
+https://doi.org/10.48550/arXiv.2506.21619
+专注了解更多
+提交历史
+发件人：周思怡 [[查看电子邮件](https://arxiv.org/show-email/bbbeb2a0/2506.21619)]
+[[v1]](https://arxiv.org/abs/2506.21619v1) 2025 年 6 月 23 日星期一 08：33：40 UTC （5,496 KB）
+[v2] 2025 年 9 月 3 日星期三 10：46：35 UTC （1,632 KB）
