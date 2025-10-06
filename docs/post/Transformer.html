@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    <script src='/gmeek/GmeekVercount.js'></script>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# ⚡ Transformer 模型大全
+
+Transformer 是一种让电脑“理解、生成和思考”的神经网络结构，  
+诞生于 2017 年的论文  
+**《Attention is All You Need》**。">
+<meta property="og:title" content="Transformer">
+<meta property="og:description" content="# ⚡ Transformer 模型大全
+
+Transformer 是一种让电脑“理解、生成和思考”的神经网络结构，  
+诞生于 2017 年的论文  
+**《Attention is All You Need》**。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://realfake.top/post/Transformer.html">
+<meta property="og:image" content="https://github.githubassets.com/favicons/favicon.svg">
+<title>Transformer</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">Transformer</h1>
+<div class="title-right">
+    <a href="https://realfake.top" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/realfaketop/web/issues/4" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>⚡ Transformer 模型大全</h1>
+<p>Transformer 是一种让电脑“理解、生成和思考”的神经网络结构，<br>
+诞生于 2017 年的论文<br>
+<strong>《Attention is All You Need》</strong>。<br>
+它用“注意力机制（Attention）”取代了传统的循环结构（RNN），<br>
+让 AI 能更快、更聪明地理解语言、图像和声音。</p>
+<hr>
+<h2>🧩 一、Transformer 的基本思想</h2>
+<p>传统神经网络一次只能看“前后几个词”，<br>
+而 Transformer 可以<strong>同时看到整句话的所有词</strong>，<br>
+并决定“哪些词彼此最重要”。</p>
+<p>这就像你在读一句话：</p>
+<blockquote>
+<p>“我昨天吃了一个🍎苹果，它非常甜。”</p>
+</blockquote>
+<p>Transformer 会自动注意到：</p>
+<blockquote>
+<p>“它” → “苹果” 的关系。<br>
+“甜” → “苹果” 的特征。</p>
+</blockquote>
+<hr>
+<h2>🧱 二、Transformer 的三大结构类型</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+<th>代表模型</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🟦 <strong>Encoder-only（只编码）</strong></td>
+<td>理解输入内容（不生成）</td>
+<td><strong>BERT</strong>, RoBERTa</td>
+<td>文本理解、搜索、分类</td>
+</tr>
+<tr>
+<td>🟥 <strong>Decoder-only（只解码）</strong></td>
+<td>根据上下文生成新内容</td>
+<td><strong>GPT 系列</strong>, LLaMA, Claude</td>
+<td>文本生成、对话</td>
+</tr>
+<tr>
+<td>🟨 <strong>Encoder–Decoder（编解码器）</strong></td>
+<td>既理解又生成</td>
+<td><strong>T5</strong>, BART, mBART</td>
+<td>翻译、摘要、问答</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>🧠 三、自然语言处理（NLP）方向的代表模型</h2>
+<h3>🟦 Encoder-only 模型（擅长理解）</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模型</th>
+<th>发布年份</th>
+<th>机构</th>
+<th>主要功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BERT</strong></td>
+<td>2018</td>
+<td>Google</td>
+<td>句子理解、分类、问答</td>
+</tr>
+<tr>
+<td><strong>RoBERTa</strong></td>
+<td>2019</td>
+<td>Meta</td>
+<td>BERT 改进版，性能更强</td>
+</tr>
+<tr>
+<td><strong>ALBERT</strong></td>
+<td>2019</td>
+<td>Google</td>
+<td>参数更少，速度更快</td>
+</tr>
+<tr>
+<td><strong>DeBERTa</strong></td>
+<td>2021</td>
+<td>Microsoft</td>
+<td>动态注意力改进，效果极好</td>
+</tr>
+<tr>
+<td><strong>ERNIE（文心）</strong></td>
+<td>2019</td>
+<td>百度</td>
+<td>中文语义理解增强</td>
+</tr>
+<tr>
+<td><strong>MacBERT / SimBERT</strong></td>
+<td>2020</td>
+<td>哈工大/讯飞</td>
+<td>中文优化版本</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h3>🟥 Decoder-only 模型（擅长生成）</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模型</th>
+<th>发布年份</th>
+<th>开发者</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPT (1,2,3,4)</strong></td>
+<td>2018–2024</td>
+<td>OpenAI</td>
+<td>聊天、写作、推理</td>
+</tr>
+<tr>
+<td><strong>ChatGPT</strong></td>
+<td>2022</td>
+<td>OpenAI</td>
+<td>基于 GPT-3.5/4 的对话系统</td>
+</tr>
+<tr>
+<td><strong>LLaMA / LLaMA 2 / LLaMA 3</strong></td>
+<td>2023–2024</td>
+<td>Meta</td>
+<td>开源语言模型系列</td>
+</tr>
+<tr>
+<td><strong>Claude 1–3</strong></td>
+<td>2023–2024</td>
+<td>Anthropic</td>
+<td>强调安全性与逻辑性</td>
+</tr>
+<tr>
+<td><strong>Gemini（Bard）</strong></td>
+<td>2023</td>
+<td>Google DeepMind</td>
+<td>文本 + 图片 + 视频多模态</td>
+</tr>
+<tr>
+<td><strong>Mistral / Mixtral</strong></td>
+<td>2023</td>
+<td>Mistral AI</td>
+<td>高效轻量、性能出色</td>
+</tr>
+<tr>
+<td><strong>Yi / Qwen / Moonshot / 百川 / 讯飞星火</strong></td>
+<td>2023–2025</td>
+<td>中国团队</td>
+<td>中文与多语言强项</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h3>🟨 Encoder–Decoder 模型（擅长理解+生成）</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模型</th>
+<th>发布年份</th>
+<th>开发者</th>
+<th>应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T5 (Text-to-Text Transfer Transformer)</strong></td>
+<td>2020</td>
+<td>Google</td>
+<td>所有NLP任务转为文本生成</td>
+</tr>
+<tr>
+<td><strong>mT5 / ByT5</strong></td>
+<td>2021</td>
+<td>Google</td>
+<td>多语言版 / 字节级版</td>
+</tr>
+<tr>
+<td><strong>BART</strong></td>
+<td>2019</td>
+<td>Meta</td>
+<td>文本生成、摘要</td>
+</tr>
+<tr>
+<td><strong>mBART</strong></td>
+<td>2020</td>
+<td>Meta</td>
+<td>多语言翻译、生成</td>
+</tr>
+<tr>
+<td><strong>UL2 / Flan-T5</strong></td>
+<td>2022</td>
+<td>Google</td>
+<td>通用型生成理解模型</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>🎨 四、视觉（Vision）方向的 Transformer</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模型</th>
+<th>全称</th>
+<th>发布年份</th>
+<th>应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ViT</strong></td>
+<td>Vision Transformer</td>
+<td>2020</td>
+<td>图像分类</td>
+</tr>
+<tr>
+<td><strong>Swin Transformer</strong></td>
+<td>Shifted Window Transformer</td>
+<td>2021</td>
+<td>图像检测、分割</td>
+</tr>
+<tr>
+<td><strong>DETR</strong></td>
+<td>Detection Transformer</td>
+<td>2020</td>
+<td>目标检测</td>
+</tr>
+<tr>
+<td><strong>DINO / Mask DINO</strong></td>
+<td>-</td>
+<td>2021–2023</td>
+<td>自监督学习</td>
+</tr>
+<tr>
+<td><strong>SAM (Segment Anything Model)</strong></td>
+<td>2023</td>
+<td>Meta</td>
+<td>通用图像分割</td>
+</tr>
+<tr>
+<td><strong>CLIP</strong></td>
+<td>Contrastive Language–Image Pretraining</td>
+<td>2021</td>
+<td>文字与图像对齐（图文理解）</td>
+</tr>
+<tr>
+<td><strong>BLIP / BLIP-2</strong></td>
+<td>-</td>
+<td>2022–2023</td>
+<td>图文问答、生成描述</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>🔊 五、语音与音频方向</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模型</th>
+<th>开发者</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Whisper</strong></td>
+<td>OpenAI</td>
+<td>语音识别 + 多语言翻译</td>
+</tr>
+<tr>
+<td><strong>AudioLM / MusicLM</strong></td>
+<td>Google</td>
+<td>音频、音乐生成</td>
+</tr>
+<tr>
+<td><strong>SpeechT5</strong></td>
+<td>Microsoft</td>
+<td>语音合成与识别统一框架</td>
+</tr>
+<tr>
+<td><strong>Valle / FireRedTTS / IndexTTS</strong></td>
+<td>多机构</td>
+<td>基于 Transformer 的语音合成模型</td>
+</tr>
+<tr>
+<td><strong>VITS / FastSpeech 2</strong></td>
+<td>-</td>
+<td>高自然度的 TTS 模型</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>🎬 六、多模态（Multimodal）Transformer</h2>
+<blockquote>
+<p>同时理解 <strong>文字 + 图像 + 音频 + 视频</strong></p>
+</blockquote>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模型</th>
+<th>发布机构</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CLIP</strong></td>
+<td>OpenAI</td>
+<td>图文配对（理解图像内容）</td>
+</tr>
+<tr>
+<td><strong>ALIGN</strong></td>
+<td>Google</td>
+<td>图文对齐，CLIP 竞争者</td>
+</tr>
+<tr>
+<td><strong>BLIP / BLIP-2</strong></td>
+<td>Salesforce</td>
+<td>图文问答、生成描述</td>
+</tr>
+<tr>
+<td><strong>Flamingo</strong></td>
+<td>DeepMind</td>
+<td>文本+图像多模态对话</td>
+</tr>
+<tr>
+<td><strong>Kosmos-1 / Kosmos-2</strong></td>
+<td>Microsoft</td>
+<td>通用多模态智能体</td>
+</tr>
+<tr>
+<td><strong>Gemini 1 / 1.5 / 2</strong></td>
+<td>Google</td>
+<td>文本+图像+视频+音频理解</td>
+</tr>
+<tr>
+<td><strong>GPT-4 / GPT-4o</strong></td>
+<td>OpenAI</td>
+<td>多模态生成（图文音视频）</td>
+</tr>
+<tr>
+<td><strong>Sora</strong></td>
+<td>OpenAI</td>
+<td>文本→视频生成</td>
+</tr>
+<tr>
+<td><strong>Pika / Runway Gen-2 / Kling / Vidu</strong></td>
+<td>多机构</td>
+<td>AI视频生成Transformer</td>
+</tr>
+<tr>
+<td><strong>LLaVA / Qwen-VL / InternVL / Yi-VL</strong></td>
+<td>中国团队</td>
+<td>中文多模态理解</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>🧬 七、科学与专业应用方向</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模型</th>
+<th>应用领域</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AlphaFold / AlphaFold 2</strong></td>
+<td>生物结构</td>
+<td>蛋白质折叠预测</td>
+</tr>
+<tr>
+<td><strong>Graphormer / Molformer</strong></td>
+<td>化学建模</td>
+<td>分子结构理解</td>
+</tr>
+<tr>
+<td><strong>Galactica / SciBERT / BioBERT</strong></td>
+<td>学术研究</td>
+<td>科学论文理解</td>
+</tr>
+<tr>
+<td><strong>CodeBERT / Codex / StarCoder</strong></td>
+<td>编程领域</td>
+<td>代码生成与理解</td>
+</tr>
+<tr>
+<td><strong>Med-PaLM / BioGPT</strong></td>
+<td>医疗领域</td>
+<td>医学问答与报告生成</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>📜 八、Transformer 模型发展时间线</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>年份</th>
+<th>关键模型</th>
+<th>重大意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2017</td>
+<td>Transformer（Attention is All You Need）</td>
+<td>原始论文诞生</td>
+</tr>
+<tr>
+<td>2018</td>
+<td>BERT、GPT-1</td>
+<td>NLP 预训练革命</td>
+</tr>
+<tr>
+<td>2019</td>
+<td>GPT-2、XLNet、BART</td>
+<td>大模型生成初见威力</td>
+</tr>
+<tr>
+<td>2020</td>
+<td>T5、ViT、DETR</td>
+<td>文本与视觉融合</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>CLIP、DALL·E、Whisper、Codex</td>
+<td>多模态与代码理解</td>
+</tr>
+<tr>
+<td>2022</td>
+<td>GPT-3.5、Stable Diffusion、Flan-T5</td>
+<td>生成式AI爆发</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>GPT-4、Claude、Gemini、SAM、LLaMA</td>
+<td>通用大模型时代</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>GPT-4o、Gemini 1.5、Yi-1.5、Qwen2-VL、Sora</td>
+<td>多模态统一智能</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>Gemini 2、Claude 4、OpenAI Video Model</td>
+<td>视频级通用智能时代开启</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>💬 九、一句话总结</h2>
+<blockquote>
+<p>Transformer 是现代 AI 的“万能大脑”。<br>
+从文字到图片，从语音到视频，从代码到药物设计，<br>
+几乎所有强大的智能系统——都是 Transformer 的后代。⚡</p>
+</blockquote>
+<hr>
+<h2>🎯 十、比喻理解（适合学生）</h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模型类型</th>
+<th>像什么</th>
+<th>能做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BERT</strong></td>
+<td>理解大师 🧠</td>
+<td>看懂文章、分析句子</td>
+</tr>
+<tr>
+<td><strong>GPT</strong></td>
+<td>作家 ✍️</td>
+<td>写作文、编故事、对话</td>
+</tr>
+<tr>
+<td><strong>CLIP</strong></td>
+<td>翻译官 👁️💬</td>
+<td>看图说话</td>
+</tr>
+<tr>
+<td><strong>ViT</strong></td>
+<td>摄影师 📷</td>
+<td>看图识物</td>
+</tr>
+<tr>
+<td><strong>Whisper</strong></td>
+<td>听力高手 👂</td>
+<td>听懂多语言语音</td>
+</tr>
+<tr>
+<td><strong>Sora</strong></td>
+<td>导演 🎬</td>
+<td>从文字拍视频</td>
+</tr>
+<tr>
+<td><strong>AlphaFold</strong></td>
+<td>科学家 🔬</td>
+<td>预测蛋白质结构</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h2>📚 十一、总结图（一句话记忆）</h2>
+<blockquote>
+<p><strong>Transformer 家族：</strong></p>
+<ul>
+<li>🧠 理解：BERT</li>
+<li>✍️ 生成：GPT</li>
+<li>🖼️ 看图：ViT / CLIP</li>
+<li>🎨 画画：DALL·E / Stable Diffusion</li>
+<li>🎧 听音：Whisper</li>
+<li>🎬 拍片：Sora</li>
+<li>💻 编程：Codex / StarCoder</li>
+<li>🔬 科研：AlphaFold / Galactica</li>
+</ul>
+</blockquote>
+<hr>
+<p>✨ <strong>结论：</strong></p>
+<blockquote>
+<p>Transformer 已经成为「AI 的通用语言」。<br>
+未来的每一种智能，都可能基于 Transformer。</p>
+</blockquote></div>
+<div style="font-size:small;margin-top:8px;float:right;">❤️ 转载文章请注明出处，谢谢！❤️</div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://realfake.top">RealFake</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","realfaketop/web");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='/gmeek/GmeekTOC.js'></script>
+
+</html>
