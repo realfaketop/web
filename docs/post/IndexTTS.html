@@ -666,7 +666,11 @@ hf download IndexTeam/IndexTTS-2 --local-dir=checkpoints
 
 <span class="pl-c"><span class="pl-c">#</span> 或 ModelScope</span>
 uv tool install <span class="pl-s"><span class="pl-pds">"</span>modelscope<span class="pl-pds">"</span></span>
-modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints</pre></div>
+modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints
+
+<span class="pl-c"><span class="pl-c">#</span> 或 ModelScope</span>
+uvx modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints
+</pre></div>
 <h4>3. 检查 GPU 环境</h4>
 <div class="highlight highlight-source-shell"><pre class="notranslate">uv run tools/gpu_check.py</pre></div>
 <h4>4. 启动 WebUI</h4>

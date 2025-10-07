@@ -153,6 +153,10 @@ hf download IndexTeam/IndexTTS-2 --local-dir=checkpoints
 # 或 ModelScope
 uv tool install "modelscope"
 modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints
+
+# 或 ModelScope
+uvx modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints
+
 ```
 
 #### 3. 检查 GPU 环境
