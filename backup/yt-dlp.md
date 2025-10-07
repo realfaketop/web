@@ -1,5 +1,3 @@
-# 🎬 yt-dlp-youtube
-
 基于 **Python* 的 油管视频下载，仅供测试，适配 Cookie 验证。  
 
 ---
