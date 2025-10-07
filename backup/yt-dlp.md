@@ -27,7 +27,7 @@
 yt-dlp -f bestaudio --cookies /home/cookies.txt -o "%(title)s.%(ext)s" "https://www.youtube.com/watch?v=uSuEdw6HAFE"
 ```
 
-### 最好视频
+### 最好音频视频
 ```
 yt-dlp -f "bestvideo+bestaudio/best" --cookies /home/cookies.txt -o "%(title)s.%(ext)s" "https://www.youtube.com/watch?v=uSuEdw6HAFE"
 ```
