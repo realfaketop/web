@@ -16,6 +16,7 @@
 - 📱 Android 视频下载器：[Seal](https://github.com/JunkFood02/Seal)
 
 - ⚡ 核心下载工具：[yt-dlp](https://github.com/yt-dlp/yt-dlp)
+-  ⚡Google ipynb  [colab](https://colab.research.google.com/drive/1wnFybq6zJkF3w4OE2AKs54HV0RUB4leM?usp=sharing)
 
 ---
 
