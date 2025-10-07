@@ -154,7 +154,7 @@ hf download IndexTeam/IndexTTS-2 --local-dir=checkpoints
 uv tool install "modelscope"
 modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints
 
-# 或 ModelScope
+# 或 直接用 uvx 方式临时调用
 uvx modelscope download --model IndexTeam/IndexTTS-2 --local_dir checkpoints
 
 ```
