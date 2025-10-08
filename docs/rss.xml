@@ -1,5 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>RealFake</title><link>https://realfake.top</link><description>BB Work No Money</description><copyright>RealFake</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://realfake.top</link></image><lastBuildDate>Tue, 07 Oct 2025 11:10:56 +0000</lastBuildDate><managingEditor>RealFake</managingEditor><ttl>60</ttl><webMaster>RealFake</webMaster><item><title>yt-dlp</title><link>https://realfake.top/post/yt-dlp.html</link><description>基于 **Python** 的 油管视频下载，仅供测试，适配 Cookie 验证。</description><guid isPermaLink="true">https://realfake.top/post/yt-dlp.html</guid><pubDate>Tue, 07 Oct 2025 10:18:37 +0000</pubDate></item><item><title>力</title><link>https://realfake.top/post/li.html</link><description># 🌍 人类发现的四种力  
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>RealFake</title><link>https://realfake.top</link><description>BB Work No Money</description><copyright>RealFake</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://realfake.top</link></image><lastBuildDate>Wed, 08 Oct 2025 06:44:34 +0000</lastBuildDate><managingEditor>RealFake</managingEditor><ttl>60</ttl><webMaster>RealFake</webMaster><item><title>WSL</title><link>https://realfake.top/post/WSL.html</link><description># CentOS WSL
+
+[CentOS](https://www.centos.org/) QCOW2 cloud images converted to RootFS for [WSL](https://docs.microsoft.com/en-us/windows/wsl/).
+
+## Current releases:
+ - [CentOS 9-stream](https://github.com/mishamosher/CentOS-WSL/releases/tag/9-stream-20230626)
+ - [CentOS 8-stream](https://github.com/mishamosher/CentOS-WSL/releases/tag/8-stream-20230626)
+ - [CentOS 8](https://github.com/mishamosher/CentOS-WSL/releases/tag/8.4-2105)
+ - [CentOS 7](https://github.com/mishamosher/CentOS-WSL/releases/tag/7.9-2211)
+ - [CentOS 6](https://github.com/mishamosher/CentOS-WSL/releases/tag/6.10-1907)
+
+# 常用命令
+
+在 PowerShell 或 CMD（管理员权限） 里执行：
+
+```
+wsl -l -v
+wsl --shutdown
+wsl --terminate CentOS7.6
+```
+。</description><guid isPermaLink="true">https://realfake.top/post/WSL.html</guid><pubDate>Wed, 08 Oct 2025 06:44:06 +0000</pubDate></item><item><title>yt-dlp</title><link>https://realfake.top/post/yt-dlp.html</link><description>基于 **Python** 的 油管视频下载，仅供测试，适配 Cookie 验证。</description><guid isPermaLink="true">https://realfake.top/post/yt-dlp.html</guid><pubDate>Tue, 07 Oct 2025 10:18:37 +0000</pubDate></item><item><title>力</title><link>https://realfake.top/post/li.html</link><description># 🌍 人类发现的四种力  
 
 在漫长的历史中，人类一直在观察、思考、做实验。</description><guid isPermaLink="true">https://realfake.top/post/li.html</guid><pubDate>Mon, 06 Oct 2025 08:05:59 +0000</pubDate></item><item><title>YOLOv5</title><link>https://realfake.top/post/YOLOv5.html</link><description># 🎯 YOLOv5 介绍文档
 
