@@ -16,5 +16,5 @@
 ```
 wsl -l -v
 wsl --shutdown
-wsl --terminate CentOS7.6
+wsl --unregister CentOS7.6
 ```
